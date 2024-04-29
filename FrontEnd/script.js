@@ -13,7 +13,7 @@ const getWorks = async () => {
     const data = await res.json();
     gallery.innerHTML = "";
 
-//  Ajout du HTML suivant les data dans la page d'accueil //
+//  Ajout du HTML suivant les data de la page d'accueil //
 
     data.forEach(photo => {
         let conteneur = document.createElement('div');

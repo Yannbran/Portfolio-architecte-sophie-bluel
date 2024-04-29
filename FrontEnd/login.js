@@ -5,6 +5,7 @@
 const form = document.querySelector('form');
 
 // Click du bouton //
+
 form.addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -17,6 +18,7 @@ form.addEventListener('submit', async function(event) {
         };
 
 // Envoi des données à l'API //
+
     try {
         const resp = await fetch('http://localhost:5678/api/users/login', {
             method: 'POST',
@@ -45,7 +47,7 @@ form.addEventListener('submit', async function(event) {
 
     catch (error) {
         console.error(error);
-        MsgErreur("Mot de passe ou identifiant érroné");
+        MsgErreur('Utilisateur non trouvé');
     }
 });
 

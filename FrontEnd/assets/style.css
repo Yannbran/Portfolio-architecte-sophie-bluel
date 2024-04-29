@@ -29,7 +29,6 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	background-color: rgb(254, 253, 246);
 	line-height: 1;
 }
 ol, ul {
@@ -47,21 +46,29 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 /** end reset css**/
+
 body {
 	max-width: 1140px;
-	margin:auto;
-	font-family: 'Work Sans' ;
+	margin: auto;
+	font-family: 'Work Sans';
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
+
 header {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 0 0 50px 0;
 }
+
+
 section {
-	margin: 50px 0
+	margin: 50px 0;
 }
+
 
 h1{
 	display: flex;
@@ -76,14 +83,14 @@ h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
+
 }
 
 h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
 }
 
 a {
@@ -98,6 +105,7 @@ a {
 	justify-content: space-between;
 	margin: 38px 10.5%; 
 }
+
 
 .bandeau-edition {
 	display: flex;
@@ -131,16 +139,18 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
 #introduction {
 	display: flex;
 	align-items: center;
 }
+
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
+
 #introduction img {
 	display: block;
-	margin: auto;
 	width: 80%;
 }
 
@@ -154,6 +164,7 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
@@ -265,7 +276,7 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
 
@@ -335,4 +346,3 @@ input[type="submit"]:hover{
 height: 20px;
 color: red;
 }
-
