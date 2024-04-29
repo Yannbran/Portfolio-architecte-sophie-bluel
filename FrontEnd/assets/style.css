@@ -29,6 +29,7 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
+	background-color: rgb(254, 253, 246);
 	line-height: 1;
 }
 ol, ul {
@@ -84,6 +85,38 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
+a {
+	text-decoration: none;
+	color: #000000;
+}
+
+.header-login {
+	max-width: 1140px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 38px 10.5%; 
+}
+
+.bandeau-edition {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: black;
+	width: auto;
+	height: 59px;
+}
+
+.bandeau-edition p {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+	color: white;
+	font-family: 'work sans';
+	font-size: 16px;
+}
+
 nav ul {
 	display: flex;
 	align-items: center;
@@ -125,6 +158,55 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/* Filtres */
+
+#filtres {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Syne';
+	font-size: 16px;
+	margin-bottom: 50px;
+	gap: 10px;
+	color: #1D6154;
+	cursor: pointer;
+}
+
+button {
+	display: flex;
+	justify-content: center;
+	min-width: 100px;
+	padding: 8px 12px;
+	border: solid 1px #1D6154;
+	border-radius: 60px;
+	background-color: white;
+	font-family: 'Syne';
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.filtre-on{
+	background-color: #1D6154;
+	color: white;
+}
+
+.inactive {
+	display: none;
+}
+
+#filtres.inactive {
+	display: none;
+}
+
+#modal.inactive {
+	display: none;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
 #gallery {
 	width: 100%;
 	display: grid;
@@ -184,5 +266,73 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+
+/* Page Login */
+
+
+.login {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 150px;
+}
+
+.form-log {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.Email {
+	display: flex;
+	flex-direction: column;
+	margin-top: 37px;
+}
+
+.Password {
+	display: flex;
+	flex-direction: column;
+	margin-top: 30px;
+	margin-bottom: 17px;
+}
+
+label[for="email"], label[for="password"]{
+	color: #3D3D3D;
+	font-weight: normal;
+	margin-bottom: 7px;
+}
+
+input[type="Password"], input[type="Email"] {
+	border :none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	height: 51px;
+	width: 379px;
+	font-size: 16px;
+}
+
+.connection {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+input[type="submit"]:hover{
+	cursor: pointer;
+}
+
+.forgot-password a{
+	color: black;
+	text-decoration: underline;
+}
+
+.forgot-password:hover {
+	cursor: pointer;
+}
+
+#error {
+height: 20px;
+color: red;
 }
 

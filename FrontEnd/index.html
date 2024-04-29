@@ -8,7 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
-	<link rel="stylesheet" href="./assets/style.css">
+	<link href="./assets/style.css" rel="stylesheet" type="text/css">
 	<script src="./script.js" defer></script>
 </head>
 <body>
@@ -16,14 +16,15 @@
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
+			<li><a href="#portfolio">Projets</a></li>
+			<li><a href="#contact">Contact</a></li>
+			<li><a href="login.html" class="Log">Login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
 <main>
+
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
@@ -35,12 +36,25 @@
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
+
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
+
+		<!--Filtres-->
+		<div id="filtres">
+			<div data-category="0"><button class="filtre-on">Tous</button></div>
+			<div data-category="1"><button class="filtre-off">Objets</button></div>
+			<div data-category="2"><button class="filtre-off">Appartements</button></div>
+			<div data-category="3"><button class="filtre-off">Hôtels & restaurants</button></div>
+		</div>
+
 		<div id="gallery"></div>
 	</section>
+
 	<section id="contact">
+
 		<h2>Contact</h2>
+		
 		<p>Vous avez un projet ? Discutons-en !</p>
 		<form action="#" method="post">
 			<label for="name">Nom</label>
