@@ -13,7 +13,7 @@ dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
+figure, figcaption, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -24,8 +24,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+article, aside, details, figcaption, figure, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
@@ -50,20 +49,26 @@ table {
 /** end reset css**/
 
 body {
-	max-width: 1140px;
-	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
 	background-color: #FFFEF8;
+	margin: auto;
+	position: relative;
 }
 
 header {
+	max-width: 1140px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	margin: 0 0 50px 0;
+	margin: 3rem auto 10rem auto;
 }
 
+main {
+	margin: 0 6rem;
+	max-width: 1140px;
+	margin: 0 15rem;
+}
 
 section {
 	margin: 50px 0;
@@ -99,11 +104,10 @@ a {
 }
 
 .header-login {
-	max-width: 1140px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin: 38px 10.5%; 
+	
 }
 
 
@@ -125,49 +129,61 @@ a {
 	font-size: 16px;
 }
 
+
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
+
+nav ul img {
+	width: 40%;
+	padding-left: 1rem;
+	
+}
+
 nav li {
-	padding: 0 10px;
-	font-size: 1.2em;
+	font-size: 1.3em;
+	margin-left: 2rem;
+	
 }
 
-li:hover {
+nav li :hover {
 	color: #B1663C;
 }
 
 #introduction {
 	display: flex;
 	align-items: center;
+	
 }
 
 #introduction figure {
-	flex: 1;
+	flex: 1.15;
 }
 
 #introduction img {
 	display: block;
-	width: 80%;
+	width: 110%;
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
+	margin-left: 7rem;
+	
 }
 #introduction h2 {
 	margin-bottom: 1em;
 }
 
 #introduction p {
-	margin-bottom: 0.5em;
+	margin-bottom: 1em;
 }
 
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-bottom: 2em;
+	margin-top: 4em;
 }
 
 /* Filtres */
@@ -230,18 +246,31 @@ button {
 	width: 100%;
 
 }
+
 #contact {
-	width: 50%;
-margin: auto;
+	width: 30%;
+	margin: auto;
+	flex-wrap: wrap;
+	display: flex;
+	
 }
+
 #contact > * {
 	text-align: center;
 
 }
+
+#contact-title {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
 #contact h2{
-	margin-bottom: 20px;
+	
 }
 #contact form {
+	
 	text-align: left;
 	margin-top:30px;
 	display: flex;
@@ -249,7 +278,8 @@ margin: auto;
 }
 
 #contact input {
-	height: 50px;
+	
+	height: 2.5rem;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -270,13 +300,21 @@ input[type="submit"]{
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 50px ;
 }
 
-footer nav ul {
+.footer-style {
+	margin: 0;
 	display: flex;
+	width: 100%;
+	background-color: white;
+	height: 50px;
 	justify-content: flex-end;
-	margin: 2em;
+	align-items: center;
+}
+
+.footer-style nav {
+	margin-right: 7rem;
 }
 
 
@@ -288,6 +326,7 @@ footer nav ul {
 	flex-direction: column;
 	align-items: center;
 	margin-top: 150px;
+	margin-bottom: 15rem;
 }
 
 .form-log {
@@ -322,20 +361,25 @@ input[type="Password"], input[type="Email"] {
 	width: 379px;
 	font-size: 16px;
 }
-
+.login input {
+	height: 2.5rem;
+	
+}
 .connection {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	height: 3rem;
 }
 
 input[type="submit"]:hover{
 	cursor: pointer;
 }
 
-.forgot-password a{
+.forgot-password {
 	color: black;
 	text-decoration: underline;
+	margin-top: 2rem;
 }
 
 .forgot-password:hover {
