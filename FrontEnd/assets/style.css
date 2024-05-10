@@ -13,7 +13,7 @@ dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
-figure, figcaption, header, hgroup,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -24,7 +24,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, header, hgroup, menu, nav, section {
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
@@ -53,27 +53,50 @@ body {
 	font-size: 14px;
 	background-color: #FFFEF8;
 	margin: auto;
-	position: relative;
+	max-width: 1440px;
 }
 
 header {
-	max-width: 1140px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	margin: 3rem auto 10rem auto;
+	margin: 0 10rem 5rem 0;
+	width: 1440px;
 }
+
+.header-login {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;	
+	margin: 3rem 10rem;
+}
+
+
+.header-edition {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: black;
+	width: auto;
+	height: 4rem;
+	
+}
+
+.header-edition p {
+	display: flex;
+	align-items: center;
+	gap: 11px;
+	color: white;
+	font-family: 'work sans';
+	font-size: 16px;
+}
+
 
 main {
-	margin: 0 6rem;
-	max-width: 1140px;
-	margin: 0 15rem;
+	display: flex;
+	flex-direction: column;
+	margin: 0px 18% 0px 18%;
 }
-
-section {
-	margin: 50px 0;
-}
-
 
 h1{
 	display: flex;
@@ -103,32 +126,6 @@ a {
 	color: #000000;
 }
 
-.header-login {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	
-}
-
-
-.bandeau-edition {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: black;
-	width: auto;
-	height: 59px;
-}
-
-.bandeau-edition p {
-	display: flex;
-	align-items: center;
-	gap: 11px;
-	color: white;
-	font-family: 'work sans';
-	font-size: 16px;
-}
-
 
 nav ul {
 	display: flex;
@@ -136,11 +133,6 @@ nav ul {
 	list-style-type: none;
 }
 
-nav ul img {
-	width: 40%;
-	padding-left: 1rem;
-	
-}
 
 nav li {
 	font-size: 1.3em;
@@ -148,8 +140,13 @@ nav li {
 	
 }
 
+nav li img {
+	width: 1.5rem;
+}
+
 nav li :hover {
 	color: #B1663C;
+	cursor: pointer;
 }
 
 #introduction {
@@ -181,9 +178,28 @@ nav li :hover {
 }
 
 #portfolio h2 {
+	display: flex;
 	text-align: center;
 	margin-bottom: 2em;
-	margin-top: 4em;
+	justify-content: center;
+}
+
+.modifs-projets {
+	margin-top: 139px;
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+}
+
+.modifs-projets button {
+	display: flex;
+	gap: 10px;
+	border: none;
+	background-color: #FFFEF8;
+	box-sizing: border-box;
+	font-family: 'work sans';
+	font-size: 14px;
+	margin-bottom: 30px;
 }
 
 /* Filtres */
@@ -257,6 +273,7 @@ button {
 
 #contact > * {
 	text-align: center;
+	margin-top: 4rem;
 
 }
 
@@ -266,6 +283,7 @@ button {
 	flex-direction: column;
 	justify-content: center;
 }
+
 #contact h2{
 	
 }
@@ -308,7 +326,7 @@ input[type="submit"]{
 	display: flex;
 	width: 100%;
 	background-color: white;
-	height: 50px;
+	height: 4.5rem;
 	justify-content: flex-end;
 	align-items: center;
 }
@@ -389,4 +407,348 @@ input[type="submit"]:hover{
 #error {
 height: 20px;
 color: red;
+}
+
+
+/* Modal */
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+.modal-pop {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 39rem;
+	height: 50rem;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.close-pop {
+	position: absolute;
+	right: 0;
+	padding: 30px;
+}
+
+.modal-pop h3 {
+	position: absolute;
+	margin: 60px 0;
+	left: 50%;
+	transform: translateX(-50%);
+	font-family: 'Work Sans';
+	font-size: 26px;	 
+}
+
+ #modal-gallery {
+
+	margin-top: 16px;
+	display: grid;
+	margin: 20% 16% 0 16%;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 10px;
+	row-gap: 30px;
+	width: auto;
+}
+
+#modal-gallery figure {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+
+#modal-gallery figure img {
+	max-width: 100%;
+	height: auto;
+}
+
+ #liner {
+	position: fixed;
+	bottom: 120px;
+	left: 50%;
+	transform: translateX(-50%);
+	border-top: solid 1px #b3b3b3;
+	width: 420px;
+}
+
+.modal-add-photo {
+	position: absolute;
+	bottom:0;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 38px 100px;
+}
+
+.modal-add-photo button {
+	width: 237px;
+	height: 36px;
+	background-color: #1D6154;
+	color: white;
+	font-size: 14px;
+}
+
+.modal-pop span {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 6px;
+}
+
+.fa-trash-can {
+	font-size: 10px;
+	color: white;
+	padding: 5px;
+	background-color: #000000;
+	border-radius: 3px;
+	top: 0;
+}
+
+
+/* Ajout Modal */
+
+.add-modal {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 630px;
+	height: 688px;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.arrow {
+	position: absolute;
+	font-size: 21px;
+	padding: 26px 30px;
+}
+
+.xmark {
+	position: absolute;
+	right: 0;
+	padding: 36px;
+}
+
+.add-modal h3 {
+	position: absolute;
+	margin: 60px 0;
+	left: 50%;
+	transform: translateX(-50%);
+	font-family: 'Work Sans';
+	font-size: 26px;	 
+}
+.add-photo {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 134px;
+	width: 420px;
+	height: 169px;
+	background-color: #e8f1f6;
+	border-radius: 3px;
+}
+
+.add-modal .img {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 5%;
+	font-size: 70px;
+	padding: 6px;
+	color: #b9c5cc;
+}
+
+.add-modal button {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 90px;
+	border: none;
+	background-color: #cbd6dc;
+	color: #306685;
+	width: 173px;
+	height: 36px;
+	font-size: 14px;
+}
+
+.add-modal p {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translateX(-50%);
+	margin-bottom: 19px;
+}
+
+
+.add-modal form {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 25%;
+	display: flex;
+	flex-direction: column;
+	width: 420px;
+	gap: 10px;
+}
+
+.add-modal label {
+	margin-top: 10px;
+}
+
+.add-modal input, select {
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	max-width: 420px;
+	height: 51px;
+}
+
+.add-modal .add-photo-button {
+	position: absolute;
+	bottom: -135px;
+	width: 237px;
+	color: #ffffff;
+	background-color: #a7a7a7;
+}
+
+.add-modal .liner {
+	position: fixed;
+	bottom: -52px;
+	left: 50%;
+	transform: translateX(-50%);
+	border-top: solid 1px #b3b3b3;
+	width: 420px;
+}
+
+.add-modal #previewImage {
+	width: 30%;
+	padding-left: 35%;
+}
+
+#green {
+	background-color: #1D6154;
+	color: white;
+}
+
+.close-pop {
+	position: absolute;
+	font-size: 20px;
+	top: 0;
+	margin-top: 5px;
+	left: 59%;
+	color: white;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+
+/*  Confirmation/Suppression Modal */
+
+
+.modal-confirmation {
+    display: none;
+    position: fixed;
+	width: 80%;
+	height: 350px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: solid 1px #b3b3b3;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.modal-confirmation h2 {
+    margin-top: 0;
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.modal-confirmation p {
+    margin-bottom: 20px;
+	position: fixed;
+	width: 65%;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 16%;
+}
+
+.modal-confirmation button {
+    background-color: #1D6154;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button.confirm {
+	position: fixed;
+	right: 20%;
+	bottom: 10%;
+	width: 135px;
+}
+
+button.cancel {
+	position: fixed;
+	left: 20%;
+	bottom: 10%;
+	width: 135px;
+}
+
+.modal-confirmation button:hover {
+    background-color: #0E2F28;
+	color: white;
+}
+
+#preview-del-img {
+	background-color: #e8f1f6;
+	position: fixed;
+	left: 14%;
+	top: 23%;
+	width: 75%;
+	height: 50%;
+	border: solid 2px red;
+}
+
+#preview-del-img img{
+	position: fixed;
+	top: 30%;
+	left: 18%;
+	width: 20%;
+	border: solid 4px white;
+}
+
+#preview-del-img p.title {
+	position: fixed;
+	top: 35%;
+	left: 75%;
+	font-weight: bold;
+}
+
+#preview-del-img p.contenu-title {
+	position: fixed;
+	top: 42%;
+	left: 75%;
+}
+
+#preview-del-img p.category {
+	position: fixed;
+	top: 55%;
+	left: 75%;
+	font-weight: bold;
+}
+
+#preview-del-img p.contenu-category {
+	position: fixed;
+	top: 62%;
+	left: 75%;
 }

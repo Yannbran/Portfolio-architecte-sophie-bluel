@@ -8,78 +8,190 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+	integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link href="./assets/style.css" rel="stylesheet" type="text/css">
 	<script src="./script.js" defer></script>
 </head>
 <body>
-<header>
-	<div class="header-login">
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li><a href="#portfolio">Projets</a></li>
-			<li><a href="#contact">Contact</a></li>
-			<li><a href="login.html" class="Log">Login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
-	</div>
-</header>
-<main>
+    <!-- Div pour l'overlay, initialement inactif -->
+	<div class="overlay inactive"></div>
 
-	<section id="introduction">
-		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt="">
-		</figure>
-		<article>
-			<h2>Designer d'espace</h2>
-			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
-		</article>
-	</section>
+    <!-- Div pour la fenêtre modale, initialement inactif -->
+	<div class="modal-pop inactive">
+        <!-- Un span pour la croix de fermeture de la fenêtre modale -->
+        <span class="close-pop"><i class="fa-solid fa-xmark fa-lg"></i></span>
 
-	<section id="portfolio">
-		<h2>Mes Projets</h2>
+        <!-- Titre de la fenêtre modale -->
+        <h3>Galerie photo</h3>
 
-		<!--Filtres-->
-		<div id="filtres">
-			<div data-category="0"><button class="filtre-on">Tous</button></div>
-			<div data-category="1"><button class="filtre-off">Objets</button></div>
-			<div data-category="2"><button class="filtre-off">Appartements</button></div>
-			<div data-category="3"><button class="filtre-off">Hôtels & restaurants</button></div>
+        <!-- Un div pour la galerie de photos -->
+        <div id="modal-gallery"></div>
+
+		<div id="liner"></div>
+
+        <!-- Un div pour le bouton d'ajout de photo -->
+        <div class="modal-add-photo">
+            <!-- Le bouton pour ajouter une photo -->
+            <button>Ajouter une photo</button>
+        </div>
+
+        <!-- Un div pour la fenêtre modale de confirmation, initialement inactif -->
+		<div id="modal-confirmation" class="modal-confirmation inactive">
+			<h2>Suppression</h2>
+
+            <!-- Un div pour l'aperçu de l'image à supprimer -->
+			<div id="preview-del-img"></div>
+
+            <!-- Une question pour confirmer la suppression -->
+			<p>Êtes-vous sûr de vouloir supprimer cette photo ?</p>
+
+            <!-- Un bouton pour confirmer la suppression -->
+			<button class="confirm">Confirmer</button>
+
+            <!-- Un bouton pour annuler la suppression -->
+			<button class="cancel" onclick="modalConfirmation.style.display = 'none';">Annuler</button>
 		</div>
+    </div>
 
-		<div id="gallery"></div>
-	</section>
+    <!-- Un div pour la fenêtre modale d'ajout de photo, initialement inactif -->
+	<div class="add-modal inactive">
+		<span class="arrow"><i class="fa-solid fa-arrow-left"></i></span>
+        <span class="xmark"><i class="fa-solid fa-xmark fa-lg"></i></span>
 
-	<section id="contact">
-		<div id="contact-title">
-		<h2>Contact</h2>
-		
-		<p>Vous avez un projet ? Discutons-en !</p>
-		</div>
-		
-		<form action="#" method="post">
-			<label for="name">Nom</label>
-			<input type="text" name="name" id="name">
-			<label for="email">Email</label>
-			<input type="email" name="email" id="email">
-			<label for="message">Message</label>
-			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
-		</form>
-	</section>
-</main>
+        <!-- Titre de la fenêtre modale d'ajout de photo -->
+        <h3>Ajout photo</h3>
 
-<footer>
-	<div class="footer-style">
-	<nav>
-		<ul>
-			<li>Mentions Légales</li>
-		</ul>
-	</nav>
-	</div>
-</footer>
+        <!-- Un div pour l'ajout de photo -->
+        <div class="add-photo">
+			<span class="close-pop inactive"><i class="fa-solid fa-circle-xmark"></i></span>
+
+            <!-- Un input pour sélectionner le fichier de la photo à ajouter -->
+			<input type="file" id="photoInput" accept="image/jpeg, image/png" size="4194304" class="inactive">
+
+			<span class="img active"><i class="fa-regular fa-image"></i></span>
+
+            <!-- Un bouton pour ajouter une photo -->
+			<button class="add-photo active">+ Ajouter photo</button>
+
+            <!-- Un paragraphe pour indiquer les types de fichiers acceptés -->
+			<p id="accepted-files-description active">jpg, png: 4mo max</p>
+
+            <!-- Une image pour l'aperçu de la photo à ajouter -->
+			<img id="previewImage" src="#" alt="Aperçu de l'image" class="inactive">
+		 </div>
+
+         <!-- Un formulaire pour le titre et la catégorie de la photo -->
+		 <form id="add-photo-form">
+			<label for="photoTitle">Titre</label>
+			<input type="text" id="photoTitle" name="photoTitle" required>
+
+			<label for="photoCategory">Catégorie</label>
+			<select id="photoCategory" name="photoCategory">
+				<option value="0"></option>
+				<option value="1">Objets</option>
+				<option value="2">Appartements</option>
+				<option value="3">Hôtels & restaurants</option>
+			</select>
+
+			<div class="liner"></div>
+
+            <!-- Un bouton pour valider l'ajout de la photo -->
+        	<button type="submit" class="add-photo-button">Valider</button> 
+		 </form>
+    </div>
 </body>
+
+	<!-- En-tête du site -->
+	<header>
+		<div class="header-edition inactive">
+			<p><i class="fa-regular fa-pen-to-square fa-lg"></i>Mode édition</p>
+		</div>
+		<div class="header-login">
+		<!-- Titre du site et profession -->
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<!-- Navigation du site -->
+		<nav>
+			<ul>
+				<li><a href="#portfolio">Projets</a></li>
+				<li><a href="#contact">Contact</a></li>
+				<li><a href="login.html" class="Log">Login</a></li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			</ul>
+		</nav>
+		</div>
+	</header>
+	
+	<!-- Contenu principal du site -->
+	<main>
+		<!-- Section d'introduction -->
+		<section id="introduction">
+			<figure>
+				<!-- Image de Sophie Bluel -->
+				<img src="./assets/images/sophie-bluel.png" alt="Photo de Sophie Bluel">
+			</figure>
+			<article>
+				<!-- Description de Sophie Bluel et de son travail -->
+				<h2>Designer d'espace</h2>
+				<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
+				<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+				<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
+			</article>
+		</section>
+	
+		<!-- Section du portfolio -->
+		<section id="portfolio">
+			<div class="modifs-projets">
+				<h2>Mes Projets</h2>
+				<button id="modal" class="inactive"><i class="fa-regular fa-pen-to-square fa-lg"></i>Modifier</button>
+			</div>
+	
+			<!-- Filtres pour le portfolio -->
+			<div id="filtres">
+				<div data-category="0"><button class="filtre-on">Tous</button></div>
+				<div data-category="1"><button class="filtre-off">Objets</button></div>
+				<div data-category="2"><button class="filtre-off">Appartements</button></div>
+				<div data-category="3"><button class="filtre-off">Hôtels & restaurants</button></div>
+			</div>
+	
+			<!-- Galerie du portfolio -->
+			<div id="gallery"></div>
+			<!-- Message d'erreur pour le chargement du portfolio -->
+			<div id="error-works"></div>
+		</section>
+	
+		<!-- Section de contact -->
+		<section id="contact">
+			<div id="contact-title">
+			<h2>Contact</h2>
+			
+			<p>Vous avez un projet ? Discutons-en !</p>
+			</div>
+			
+			<!-- Formulaire de contact -->
+			<form action="#" method="post">
+				<label for="name">Nom</label>
+				<input type="text" name="name" id="name" autocomplete="given-name">
+				<label for="email">Email</label>
+				<input type="email" name="email" id="email" autocomplete="off">
+				<label for="message">Message</label>
+				<textarea name="message" id="message" cols="30" rows="10"></textarea>
+				<input type="submit" value="Envoyer">
+			</form>
+		</section>
+	</main>
+	
+	<!-- Pied de page du site -->
+	<footer>
+		<div class="footer-style">
+		<!-- Navigation du pied de page -->
+		<nav>
+			<ul>
+				<li><a href="#">Mentions Légales</a></li>
+			</ul>
+		</nav>
+		</div>
+	</footer>
+	</body>
 </html>

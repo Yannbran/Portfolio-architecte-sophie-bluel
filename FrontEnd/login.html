@@ -1,62 +1,91 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-	<meta charset="UTF-8">
-	<title>Login - Sophie Bluel - Architecte d'intérieur</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
-	<meta name="description" content="">
-	<link rel="stylesheet" href="./assets/style.css">
-	<script src="./login.js" defer></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login - Sophie Bluel - Architecte d'intérieur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="./assets/style.css"/>
+    <script src="./login.js" defer></script>
+  </head>
+
+  <body>
+
+    <!-- En-tête du site -->
     <header>
-        <div class="header-login">
-            <div>
-                <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></div>
-            <div>
-                <nav>
-                <ul>
-                    <li><a href="index.html#portfolio">Projets</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-                </ul>
-                </nav>
-            </div>
+      <div class="header-login">
+        <div>
+          <!-- Titre du site et profession -->
+          <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
         </div>
-    </header>
-    <main>
-        <div class="login">
-            <h2>Log In</h2>
-            <form method="get" class="form-log">
-                <div class="Email">
-                    <label for="email"> E-mail</label>
-                    <input type="email" id="email" size="30" required />
-                </div>
-                <div class="Password">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="password" required />
-                </div>
-                <div id="error"> </div>
-                <div class="connection">
-                    <input type="submit" value="Se connecter" />
-                </div>
-            </form>
-                <div class="forgot-password"><a href="#">Mot de passe oublié</a></div>
-        </div>
-        
-    </main>
-    <footer>
-        <div class="footer-style">
-        <nav>
+        <div>
+          <!-- Navigation du site -->
+          <nav>
             <ul>
-                <li>Mentions Légales</li>
+              <li><a href="index.html#portfolio">Projets</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+              <li><a href="login.html">Login</a></li>
+              <!-- Lien vers le compte Instagram -->
+              <li>
+                <img src="./assets/icons/instagram.png" alt="Instagram"/>
+              </li>
             </ul>
-        </nav>
+          </nav>
         </div>
+      </div>
+    </header>
+
+    <!-- Contenu principal du site -->
+    <main>
+      <div class="login">
+        <h2>Log In</h2>
+        <!-- Formulaire de connexion -->
+        <form method="get" class="form-log">
+          <div class="Email">
+            <!-- Champ pour l'email -->
+            <label for="email"> E-mail</label>
+            <input type="email" id="email" autocomplete="on" required />
+          </div>
+          <div class="Password">
+            <!-- Champ pour le mot de passe -->
+            <label for="password">Mot de passe</label>
+            <input
+              type="password"
+              id="password"
+              size="30"
+              name="password"
+              required
+            />
+          </div>
+          <!-- Zone pour afficher les erreurs -->
+          <div id="error"></div>
+          <div class="connection">
+            <!-- Bouton de connexion -->
+            <input type="submit" value="Se connecter" />
+          </div>
+        </form>
+        <!-- Lien pour réinitialiser le mot de passe -->
+        <div class="forgot-password"><a href="#">Mot de passe oublié</a></div>
+      </div>
+    </main>
+
+    <!-- Pied de page du site -->
+    <footer>
+      <div class="footer-style">
+        <!-- Navigation du pied de page -->
+        <nav>
+          <ul>
+            <!-- Lien vers les mentions légales -->
+            <li><a href="#">Mentions Légales</a></li>
+          </ul>
+        </nav>
+      </div>
     </footer>
-</body>
+  </body>
 </html>
