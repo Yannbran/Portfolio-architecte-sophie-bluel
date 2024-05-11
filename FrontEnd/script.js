@@ -62,6 +62,7 @@ const getWorks = async () => {
 // Appel de la fonction pour récupérer les données
 getWorks();
 
+// PARTIE FILTRES
 // Récupération des éléments de filtre avec la catégorie
 let filters = document.querySelectorAll('#filtres div');
 
@@ -134,7 +135,7 @@ function MasquerFiltres() {
 MasquerFiltres();
 
 
-
+// PARTIE LOGIN
 // Fonction pour gérer la déconnexion de l'utilisateur
 function LogOut () {
     // Vérifie si un token existe
@@ -165,6 +166,8 @@ LogOut ();
 
 
 
+// PARTIES MODALES
+
 // Sélection de l'élément avec l'ID 'modal-gallery' et stockage dans la variable modalGallery
 const modalGallery = document.querySelector('#modal-gallery');
 
@@ -191,7 +194,7 @@ const getModalWorks = async () => {
         data.forEach(photoData => {
             // Ajout de chaque photo à la galerie avec un bouton de suppression
             modalGallery.innerHTML += `
-                <figure data-${photoData.categoryId} class="active">
+                <figure class="active" data-${photoData.categoryId} >
                     <img src=${photoData.imageUrl} alt=${photoData.title}>
                     <span class="photo-delete" data-id="${photoData.id}"><i class="fa-solid fa-trash-can"></i></span>
                 </figure>`;
@@ -221,7 +224,79 @@ const getModalWorks = async () => {
     }
 };
 
-// Section de suppression
+
+// Modale galerie photo
+
+// Sélection des éléments nécessaires
+const clickModal = document.querySelector('#modal')
+const modalPop = document.querySelector('.modal-pop')
+const overlay = document.querySelector('.overlay')
+
+// Ajout d'un écouteur d'événements au bouton d'ouverture de la galerie
+clickModal.addEventListener('click', function() {
+    // Activation de la fenêtre modale et de l'overlay
+    modalPop.classList.replace('inactive', 'active');
+    overlay.classList.replace('inactive', 'active');
+})
+
+// Sélection du bouton de fermeture de la galerie
+const closeModalPop = document.querySelector('.close-pop');
+
+// Ajout d'un écouteur d'événements au bouton de fermeture de la galerie
+closeModalPop.addEventListener('click', function() {
+    // Désactivation de la fenêtre modale et de l'overlay
+    modalPop.classList.replace('active', 'inactive')
+    overlay.classList.replace('active', 'inactive')
+})
+
+// Ouverture et Fermeture Modale ajout photo 
+
+// Sélection des éléments nécessaires
+const ajoutPhotoModal = document.querySelector('.modal-add-photo')
+const addModal = document.querySelector('.add-modal')
+const arrow = document.querySelector('.arrow')
+
+// Ajout d'un écouteur d'événements au bouton d'ajout de photo
+ajoutPhotoModal.addEventListener("click", function() {
+    // Activation de la fenêtre modale d'ajout de photo et désactivation de la fenêtre modale de la galerie
+    addModal.classList.replace("inactive", "active");
+    modalPop.classList.replace("active", "inactive");
+})
+
+// Ajout d'un écouteur d'événements à la flèche de retour
+arrow.addEventListener("click", function() {
+    // Désactivation de la fenêtre modale d'ajout de photo et activation de la fenêtre modale de la galerie
+    addModal.classList.replace("active", "inactive");
+    modalPop.classList.replace("inactive", "active")
+})
+
+// Sélection du bouton de fermeture de la fenêtre modale d'ajout de photo
+const fermetureModalAjout = document.querySelector(".xmark");
+
+// Ajout d'un écouteur d'événements au bouton de fermeture de la fenêtre modale d'ajout de photo
+fermetureModalAjout.addEventListener("click", function() {
+    // Désactivation de la fenêtre modale d'ajout de photo et de l'overlay
+    addModal.classList.replace("active", "inactive")
+    overlay.classList.replace("active", "inactive")
+})
+
+
+// Fermeture de la modal gestion lorsque l'overlay est cliqué
+overlay.addEventListener("click", function(event) {
+    if (event.target === overlay) {
+        modalPop.classList.replace("active", "inactive");
+        overlay.classList.replace("active", "inactive");
+    }
+});
+
+// Fermeture de la modal ajout lorsque l'overlay est cliqué
+overlay.addEventListener("click", function(event) {
+    if (event.target === overlay) {
+        addModal.classList.replace("active", "inactive");
+        overlay.classList.replace("active", "inactive");
+    }
+});
+
 
 // Fonction pour ouvrir la fenêtre modale de confirmation
 const openConfirmationModal = (id, photoData) => {
@@ -301,57 +376,3 @@ const deleteWork = async (id) => {
 getModalWorks()
 
 
-// Ouverture et Fermeture Modale galerie 
-
-// Sélection des éléments nécessaires
-const clickModal = document.querySelector('#modal')
-const modalPop = document.querySelector('.modal-pop')
-const overlay = document.querySelector('.overlay')
-
-// Ajout d'un écouteur d'événements au bouton d'ouverture de la galerie
-clickModal.addEventListener('click', function() {
-    // Activation de la fenêtre modale et de l'overlay
-    modalPop.classList.replace('inactive', 'active');
-    overlay.classList.replace('inactive', 'active');
-})
-
-// Sélection du bouton de fermeture de la galerie
-const closeModalPop = document.querySelector('.close-pop');
-
-// Ajout d'un écouteur d'événements au bouton de fermeture de la galerie
-closeModalPop.addEventListener('click', function() {
-    // Désactivation de la fenêtre modale et de l'overlay
-    modalPop.classList.replace('active', 'inactive')
-    overlay.classList.replace('active', 'inactive')
-})
-
-// Ouverture et Fermeture Modale ajout photo 
-
-// Sélection des éléments nécessaires
-const ajoutPhotoModal = document.querySelector('.modal-add-photo')
-const addModal = document.querySelector('.add-modal')
-const arrow = document.querySelector('.arrow')
-
-// Ajout d'un écouteur d'événements au bouton d'ajout de photo
-ajoutPhotoModal.addEventListener("click", function () {
-    // Activation de la fenêtre modale d'ajout de photo et désactivation de la fenêtre modale de la galerie
-    addModal.classList.replace("inactive", "active");
-    modalPop.classList.replace("active", "inactive");
-})
-
-// Ajout d'un écouteur d'événements à la flèche de retour
-arrow.addEventListener("click", function() {
-    // Désactivation de la fenêtre modale d'ajout de photo et activation de la fenêtre modale de la galerie
-    addModal.classList.replace("active", "inactive");
-    modalPop.classList.replace("inactive", "active")
-})
-
-// Sélection du bouton de fermeture de la fenêtre modale d'ajout de photo
-const fermetureModalAjout = document.querySelector(".xmark");
-
-// Ajout d'un écouteur d'événements au bouton de fermeture de la fenêtre modale d'ajout de photo
-fermetureModalAjout.addEventListener("click", function() {
-    // Désactivation de la fenêtre modale d'ajout de photo et de l'overlay
-    addModal.classList.replace("active", "inactive")
-    overlay.classList.replace("active", "inactive")
-})

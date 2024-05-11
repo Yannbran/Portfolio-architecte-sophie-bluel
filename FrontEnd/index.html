@@ -65,15 +65,17 @@
 
         <!-- Un div pour l'ajout de photo -->
         <div class="add-photo">
-			<span class="close-pop inactive"><i class="fa-solid fa-circle-xmark"></i></span>
+			<span id="close-pop inactive"></span>
 
             <!-- Un input pour sélectionner le fichier de la photo à ajouter -->
+			<label for="photoInput"></label>
 			<input type="file" id="photoInput" accept="image/jpeg, image/png" size="4194304" class="inactive">
-
+			
 			<span class="img active"><i class="fa-regular fa-image"></i></span>
 
             <!-- Un bouton pour ajouter une photo -->
-			<button class="add-photo active">+ Ajouter photo</button>
+			<button class="add-photo active" type="button">+ Ajouter photo</button>
+			
 
             <!-- Un paragraphe pour indiquer les types de fichiers acceptés -->
 			<p id="accepted-files-description active">jpg, png: 4mo max</p>
@@ -83,7 +85,8 @@
 		 </div>
 
          <!-- Un formulaire pour le titre et la catégorie de la photo -->
-		 <form id="add-photo-form">
+		 
+		 <form id="photo-form">
 			<label for="photoTitle">Titre</label>
 			<input type="text" id="photoTitle" name="photoTitle" required>
 
@@ -99,7 +102,9 @@
 
             <!-- Un bouton pour valider l'ajout de la photo -->
         	<button type="submit" class="add-photo-button">Valider</button> 
-		 </form>
+		
+		</form>
+		
     </div>
 </body>
 
