@@ -13,7 +13,7 @@ form.addEventListener('submit', async function(event) {
     // Création de l'objet data contenant les informations de l'utilisateur
     const data = {
             email: email,
-            password: password
+            password: password,
         };
 
     // Tentative d'envoi des données à l'API

@@ -119,6 +119,7 @@ h2{
 	font-weight: 700;
 	font-size: 30px;
 	color: #1D6154;
+	margin-top: 1.5rem;
 }
 
 a {
@@ -185,7 +186,7 @@ nav li :hover {
 }
 
 .modifs-projets {
-	margin-top: 139px;
+	margin-top: 7rem;
 	display: flex;
 	justify-content: center;
 	gap: 30px;
@@ -420,14 +421,18 @@ color: red;
 	background-color: rgba(0, 0, 0, 0.25);
 }
 
-
+#modal {
+	display: flex;
+	align-items: center;
+}
 
 .modal-pop {
 	position: absolute;
-	top: 55%;
+	font-family: 'Work Sans';
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 39rem;
+	width: 42rem;
 	height: 45rem;
 	background-color: white;
 	border-radius: 10px;
@@ -450,14 +455,13 @@ color: red;
 }
 
  #modal-gallery {
-
 	margin-top: 16px;
 	display: grid;
 	margin: 20% 16% 0 16%;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 10px;
 	row-gap: 30px;
-	width: auto;
+	width: 70%;
 }
 
 #modal-gallery figure {
@@ -467,8 +471,9 @@ color: red;
 }
 
 #modal-gallery figure img {
-	max-width: 100%;
+	max-width: 110%;
 	height: auto;
+	
 }
 
  #liner {
@@ -518,11 +523,11 @@ color: red;
 .add-modal {
 	font-family: 'Syne';
 	position: absolute;
-	top: 55%;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 39.375rem;
-	height: 43.75rem;
+	width: 42rem;
+	height: 45rem;
 	background-color: white;
 	border-radius: 2%;
 }
@@ -619,7 +624,7 @@ color: red;
 	height: 51px;
 }
 
-.add-modal .add-photo-button {
+.add-modal .add-photo-confirm {
 	position: absolute;
 	align-items: center;
 	bottom: -120px;
@@ -662,33 +667,29 @@ color: red;
 
 
 .modal-confirmation {
-    display: none;
-    position: fixed;
-	width: 80%;
-	height: 350px;
+	font-family: 'Work Sans';
+    position: absolute;
+	align-items: center;
+	justify-content: center;
+	width: 39rem;
+	height: 37rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    border: solid 1px #b3b3b3;
+    border: solid 1px #ff0101;
     padding: 20px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+	border-radius: 2%;
 }
 
 .modal-confirmation h2 {
-    margin-top: 0;
-	position: fixed;
+	width: 80%;
+    margin-top: 2rem;
+	margin-left: 2rem;
+	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-}
-
-.modal-confirmation p {
-    margin-bottom: 20px;
-	position: fixed;
-	width: 65%;
-	left: 50%;
-	transform: translateX(-50%);
-	top: 16%;
 }
 
 .modal-confirmation button {
@@ -700,17 +701,18 @@ color: red;
 }
 
 button.confirm {
-	position: fixed;
+	position: absolute;
 	right: 20%;
 	bottom: 10%;
 	width: 135px;
 }
 
 button.cancel {
-	position: fixed;
+	position: absolute;
 	left: 20%;
 	bottom: 10%;
 	width: 135px;
+	background-color: #B1663C;
 }
 
 .modal-confirmation button:hover {
@@ -719,45 +721,45 @@ button.cancel {
 }
 
 #preview-del-img {
-	background-color: #e8f1f6;
+	background-color: #f6e8eb;
 	position: fixed;
 	left: 14%;
 	top: 23%;
-	width: 75%;
+	width: 73%;
 	height: 50%;
-	border: solid 2px red;
+	
 }
 
 #preview-del-img img{
-	position: fixed;
-	top: 30%;
-	left: 18%;
-	width: 20%;
+	position: absolute;
+	top: 9%;
+	left: 8%;
+	width: 40%;
 	border: solid 4px white;
 }
 
 #preview-del-img p.title {
 	position: fixed;
 	top: 35%;
-	left: 75%;
+	left: 60%;
 	font-weight: bold;
 }
 
 #preview-del-img p.contenu-title {
 	position: fixed;
 	top: 42%;
-	left: 75%;
+	left: 60%;
 }
 
 #preview-del-img p.category {
 	position: fixed;
 	top: 55%;
-	left: 75%;
+	left: 60%;
 	font-weight: bold;
 }
 
 #preview-del-img p.contenu-category {
 	position: fixed;
 	top: 62%;
-	left: 75%;
+	left: 60%;
 }

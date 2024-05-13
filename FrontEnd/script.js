@@ -22,19 +22,19 @@ const getWorks = async () => {
         gallery.innerHTML = "";
 
         // Parcours des données reçues de l'API
-        data.forEach(photo => {
+        data.forEach(photoElement => {
             // Création d'un conteneur pour chaque photo
             let container = document.createElement('div');
-            container.classList.add('icon', 'active');
-            container.dataset.category = photo.categoryId;
+            container.classList.add('icon-of-works', 'active');
+            container.dataset.category = photoElement.categoryId;
 
             // Création de l'élément image
             let image = document.createElement('img');
-            image.src = photo.imageUrl;
+            image.src = photoElement.imageUrl;
 
             // Création de l'élément titre
             let title = document.createElement('p');
-            title.textContent = photo.title;
+            title.textContent = photoElement.title;
 
             // Ajout des éléments image et titre au conteneur
             container.appendChild(image);
@@ -44,18 +44,20 @@ const getWorks = async () => {
             gallery.appendChild(container);
         });
 
-    } catch (error) {
+    } 
+    catch (error) {
         // Gestion de l'erreur
         const errorMsg = document.getElementById('error-works');
-
-        // Vérification de l'existence de l'élément errorMsg
+        const messageErreur = "Une erreur s'est produite : " + error.message;
+    
+        // Vérification de l'existence de l'élément errorMsg et affichage du message
         if (errorMsg) {
-            errorMsg.textContent = "Une erreur s'est produite : " + error.message;
+            //Return
+            errorMsg.textContent = messageErreur;
         } else {
-            console.error("L'élément 'error-works' n'a pas été trouvé dans le DOM.");
+            // Si l'élément n'existe pas, on envoie le message d'erreur dans la console, utile en cas de débogage
+            console.error("L'élément 'error-works' n'a pas été trouvé dans le DOM. " + messageErreur);
         }
-
-        console.error("Une erreur s'est produite :", error.message);
     }
 };
 
@@ -73,7 +75,7 @@ for(let filtre of filters){
         let tag = this.getAttribute('data-category');
 
         // Récupération de tous les éléments de la galerie
-        let figures = document.querySelectorAll('#gallery .icon');
+        let figures = document.querySelectorAll('#gallery .icon-of-works');
 
         // Parcours de tous les éléments de la galerie
         for(let figure of figures){
@@ -88,7 +90,7 @@ for(let filtre of filters){
     });
 };
 
-// Récupération des boutons de filtre
+// Récupération des boutons de filtres
 const boutonsFiltres = document.querySelectorAll('#filtres button');
 
 // Ajout d'un écouteur d'événement à chaque bouton de filtre
@@ -184,9 +186,10 @@ const getModalWorks = async () => {
         // Envoi d'une requête GET à l'API pour récupérer les données
         const res = await fetch("http://localhost:5678/api/works");
 
-        // Conversion de la réponse en JSON
+        // Variable pour enregistrée la réponse en JSON
         const data = await res.json();
 
+       
         // Réinitialisation du contenu de la galerie
         modalGallery.innerHTML = "";
 
@@ -198,6 +201,7 @@ const getModalWorks = async () => {
                     <img src=${photoData.imageUrl} alt=${photoData.title}>
                     <span class="photo-delete" data-id="${photoData.id}"><i class="fa-solid fa-trash-can"></i></span>
                 </figure>`;
+
         });
 
         // Ajout d'un écouteur d'événements à chaque bouton de suppression
@@ -298,17 +302,17 @@ overlay.addEventListener("click", function(event) {
 });
 
 
-// Fonction pour ouvrir la fenêtre modale de confirmation
+// Fonction pour ouvrir la fenêtre modale pour confirmer la suppression 
 const openConfirmationModal = (id, photoData) => {
     // Sélection des boutons de confirmation et d'annulation
     const confirmButton = modalConfirmation.querySelector(".confirm");
     const cancelButton = modalConfirmation.querySelector(".cancel");
 
     // Attribution de l'ID de l'œuvre au bouton de confirmation
-    confirmButton.setAttribute("data-id", id);
+    confirmButton.setAttribute('data-id', id);
 
     // Affichage de la fenêtre modale
-    modalConfirmation.style.display = "block";
+    modalConfirmation.style.display = 'block';
 
     // Ajout d'un écouteur d'événements au bouton de confirmation
     confirmButton.addEventListener('click', function () {
@@ -329,7 +333,7 @@ const openConfirmationModal = (id, photoData) => {
         previewDelImg.innerHTML = '';
 
         // Fermeture de la fenêtre modale
-        modalConfirmation.style.display = "none";
+        modalConfirmation.style.display = 'none';
     });
 
     // Affichage des détails de l'œuvre dans la fenêtre modale
@@ -344,7 +348,7 @@ const openConfirmationModal = (id, photoData) => {
 // Fonction pour confirmer la suppression de l'œuvre
 const confirmDelete = (id) => {
     // Fermeture de la fenêtre modale
-    modalConfirmation.style.display = "none";
+    modalConfirmation.style.display = 'none';
 
     // Appel de la fonction de suppression de l'œuvre
     deleteWork(id);
@@ -364,9 +368,9 @@ const deleteWork = async (id) => {
 
         // Vérification du statut de la réponse
         if (res.ok) {
-            console.log("Photo supprimée");
+            console.log('Photo supprimée');
         } else {
-            throw new Error ("Erreur lors de la suppression");
+            throw new Error ('Erreur lors de la suppression');
         }
     } catch (error) {
         console.error(error);
@@ -374,5 +378,21 @@ const deleteWork = async (id) => {
 };
 
 getModalWorks()
+
+
+// Ajout de travaux 
+const photoInput = document.querySelector('#photoInput');
+const previewImg = document.querySelector('#previewImg');
+const photoTitle = document.querySelector('#photoTitle');
+const photoCategory = document.querySelector('#photoCategory');
+const addPhotoButton = document.querySelector('.button-add-photo');
+const addPhotoConfirm = document.querySelector('.add-photo-confirm');
+const image = document.querySelector('.img');
+const acceptedFiles = document.querySelector('.accepted-files-description');
+const closePop = document.querySelector('.close-pop');
+
+addPhotoButton.addEventListener('click', function() {
+    photoInput.click();
+});
 
 

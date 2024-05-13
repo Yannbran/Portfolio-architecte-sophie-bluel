@@ -39,13 +39,12 @@
 
         <!-- Un div pour la fenêtre modale de confirmation, initialement inactif -->
 		<div id="modal-confirmation" class="modal-confirmation inactive">
-			<h2>Suppression</h2>
 
             <!-- Un div pour l'aperçu de l'image à supprimer -->
 			<div id="preview-del-img"></div>
 
             <!-- Une question pour confirmer la suppression -->
-			<p>Êtes-vous sûr de vouloir supprimer cette photo ?</p>
+			<h2>Supprimer cette photo ?</h2>
 
             <!-- Un bouton pour confirmer la suppression -->
 			<button class="confirm">Confirmer</button>
@@ -74,14 +73,14 @@
 			<span class="img active"><i class="fa-regular fa-image"></i></span>
 
             <!-- Un bouton pour ajouter une photo -->
-			<button class="add-photo active" type="button">+ Ajouter photo</button>
+			<button class="button-add-photo active" type="button">+ Ajouter photo</button>
 			
 
             <!-- Un paragraphe pour indiquer les types de fichiers acceptés -->
 			<p id="accepted-files-description active">jpg, png: 4mo max</p>
 
             <!-- Une image pour l'aperçu de la photo à ajouter -->
-			<img id="previewImage" src="#" alt="Aperçu de l'image" class="inactive">
+			<img id="previewImg" src="#" alt="Aperçu de l'image" class="inactive">
 		 </div>
 
          <!-- Un formulaire pour le titre et la catégorie de la photo -->
@@ -101,7 +100,7 @@
 			<div class="liner"></div>
 
             <!-- Un bouton pour valider l'ajout de la photo -->
-        	<button type="submit" class="add-photo-button">Valider</button> 
+        	<button type="submit" class="add-photo-confirm">Valider</button> 
 		
 		</form>
 		
