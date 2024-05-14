@@ -4,6 +4,7 @@ const form = document.querySelector('form');
 // Ajout d'un écouteur d'événement sur le formulaire pour gérer la soumission
 form.addEventListener('submit', async function(event) {
     // Prévention du comportement par défaut de la soumission du formulaire
+    // empeche la page du navigateur de se recharger 
     event.preventDefault();
 
     // Récupération des valeurs des champs email et mot de passe
@@ -13,7 +14,7 @@ form.addEventListener('submit', async function(event) {
     // Création de l'objet data contenant les informations de l'utilisateur
     const data = {
             email: email,
-            password: password,
+            password: password
         };
 
     // Tentative d'envoi des données à l'API
@@ -37,7 +38,7 @@ form.addEventListener('submit', async function(event) {
         // Récupération du token dans la réponse
         const token = respData.token;
 
-        // Si un token est présent dans la réponse, le stocke dans le localStorage et redirige vers la page d'accueil
+        // Si un token est présent dans la réponse,le stocke dans le localStorage et redirige vers la page d'accueil//
         if (token) {
             localStorage.setItem('token', token);
             window.location.href = 'index.html';

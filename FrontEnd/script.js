@@ -1,18 +1,15 @@
 // Récupération de l'élément "gallery" dans le DOM
-const gallery = document.getElementById("gallery");
-
-// Récupération du token de l'utilisateur dans le localStorage
-const token = localStorage.getItem('token');
+const gallery = document.getElementById('gallery');
 
 // Fonction asynchrone pour récupérer les données de l'API
 const getWorks = async () => {
     try {
         // Envoi de la requête avec fetch()
-        const res = await fetch("http://localhost:5678/api/works");
+        const res = await fetch('http://localhost:5678/api/works');
 
         // Vérification du statut de la réponse
         if (!res.ok) {
-            throw new Error("Erreur lors de la récupération des données.");
+            throw new Error('Erreur lors de la récupération des données.');
         }
 
         // Conversion de la réponse en JSON
@@ -68,10 +65,11 @@ getWorks();
 // Récupération des éléments de filtre avec la catégorie
 let filters = document.querySelectorAll('#filtres div');
 
-// Ajout d'un écouteur d'événement à chaque filtre en identifiant l'ID
+// 
+// Ajout d'un écouteur d'événement à chaque bouton filtre en identifiant l'ID
 for(let filtre of filters){
     filtre.addEventListener('click', function(){
-        // Récupération de la catégorie du filtre
+        // Récupère et enregistre la catégorie du filtre pendant l'itération
         let tag = this.getAttribute('data-category');
 
         // Récupération de tous les éléments de la galerie
@@ -98,20 +96,19 @@ boutonsFiltres.forEach(bouton => {
     bouton.addEventListener('click', function() {
         // Suppression de la classe "filtre-on" de tous les boutons
         boutonsFiltres.forEach(bouton => {
-            bouton.classList.remove('filtre-on');
-            bouton.classList.add('filtre-off');
+            bouton.classList.remove('filtre-on');    
         });
-
         // Ajout de la classe "filtre-on" uniquement au bouton cliqué
-        this.classList.remove('filtre-off');
         this.classList.add('filtre-on');
     });
 });
 
+// PARTIE LOGIN
+// Récupération du token de l'utilisateur dans le localStorage
+const token = localStorage.getItem('token');
 
-
-// Fonction pour masquer les filtres quand l'utilisateur est connecté
-function MasquerFiltres() {
+// Fonction pour afficher le contenu du mode edition quand l'utilisateur est connecté
+function modeEdition() {
     // Vérifie si un token existe
     if (token) {
         // Récupération des éléments dans le DOM
@@ -133,11 +130,9 @@ function MasquerFiltres() {
         }
     }
 }
-// Appel de la fonction pour masquer les filtres
-MasquerFiltres();
+// Appel de la fonction pour afficher le mode edition
+modeEdition();
 
-
-// PARTIE LOGIN
 // Fonction pour gérer la déconnexion de l'utilisateur
 function LogOut () {
     // Vérifie si un token existe
@@ -169,12 +164,36 @@ LogOut ();
 
 
 // PARTIES MODALES
+// Modale galerie photo
+// Sélection des éléments nécessaires
+const clickModal = document.querySelector('#modal')
+const modalPop = document.querySelector('.modal-pop')
+const overlay = document.querySelector('.overlay')
 
+// Ajout d'un écouteur d'événements au bouton d'ouverture de la galerie
+clickModal.addEventListener('click', function() {
+    // Activation de la fenêtre modale et de l'overlay
+    modalPop.classList.replace('inactive', 'active');
+    overlay.classList.replace('inactive', 'active');
+})
+
+// Sélection du bouton de fermeture de la galerie
+const closeModalPop = document.querySelector('.close-pop');
+
+// Ajout d'un écouteur d'événements au bouton de fermeture de la galerie
+closeModalPop.addEventListener('click', function() {
+    // Désactivation de la fenêtre modale et de l'overlay
+    modalPop.classList.replace('active', 'inactive')
+    overlay.classList.replace('active', 'inactive')
+})
+
+
+// Ajout et suppression de travaux 
 // Sélection de l'élément avec l'ID 'modal-gallery' et stockage dans la variable modalGallery
 const modalGallery = document.querySelector('#modal-gallery');
 
 // Sélection de l'élément avec l'ID 'modal-confirmation' et stockage dans la variable modalConfirmation
-const modalConfirmation = document.querySelector('#modal-confirmation');
+const modalConfirmation = document.querySelector('#modal-delete');
 
 // Sélection de l'élément avec l'ID 'preview-del-img' et stockage dans la variable previewDelImg
 const previewDelImg = document.querySelector('#preview-del-img');
@@ -185,11 +204,10 @@ const getModalWorks = async () => {
     try {
         // Envoi d'une requête GET à l'API pour récupérer les données
         const res = await fetch("http://localhost:5678/api/works");
-
+      
         // Variable pour enregistrée la réponse en JSON
         const data = await res.json();
 
-       
         // Réinitialisation du contenu de la galerie
         modalGallery.innerHTML = "";
 
@@ -201,10 +219,10 @@ const getModalWorks = async () => {
                     <img src=${photoData.imageUrl} alt=${photoData.title}>
                     <span class="photo-delete" data-id="${photoData.id}"><i class="fa-solid fa-trash-can"></i></span>
                 </figure>`;
-
+               
         });
-
-        // Ajout d'un écouteur d'événements à chaque bouton de suppression
+        
+   // Ajout d'un écouteur d'événements à chaque bouton de suppression
         document.querySelectorAll('.photo-delete').forEach(span => {
             span.addEventListener('click', function () {
                 // Récupération de l'ID de la photo à supprimer
@@ -229,60 +247,8 @@ const getModalWorks = async () => {
 };
 
 
-// Modale galerie photo
 
-// Sélection des éléments nécessaires
-const clickModal = document.querySelector('#modal')
-const modalPop = document.querySelector('.modal-pop')
-const overlay = document.querySelector('.overlay')
 
-// Ajout d'un écouteur d'événements au bouton d'ouverture de la galerie
-clickModal.addEventListener('click', function() {
-    // Activation de la fenêtre modale et de l'overlay
-    modalPop.classList.replace('inactive', 'active');
-    overlay.classList.replace('inactive', 'active');
-})
-
-// Sélection du bouton de fermeture de la galerie
-const closeModalPop = document.querySelector('.close-pop');
-
-// Ajout d'un écouteur d'événements au bouton de fermeture de la galerie
-closeModalPop.addEventListener('click', function() {
-    // Désactivation de la fenêtre modale et de l'overlay
-    modalPop.classList.replace('active', 'inactive')
-    overlay.classList.replace('active', 'inactive')
-})
-
-// Ouverture et Fermeture Modale ajout photo 
-
-// Sélection des éléments nécessaires
-const ajoutPhotoModal = document.querySelector('.modal-add-photo')
-const addModal = document.querySelector('.add-modal')
-const arrow = document.querySelector('.arrow')
-
-// Ajout d'un écouteur d'événements au bouton d'ajout de photo
-ajoutPhotoModal.addEventListener("click", function() {
-    // Activation de la fenêtre modale d'ajout de photo et désactivation de la fenêtre modale de la galerie
-    addModal.classList.replace("inactive", "active");
-    modalPop.classList.replace("active", "inactive");
-})
-
-// Ajout d'un écouteur d'événements à la flèche de retour
-arrow.addEventListener("click", function() {
-    // Désactivation de la fenêtre modale d'ajout de photo et activation de la fenêtre modale de la galerie
-    addModal.classList.replace("active", "inactive");
-    modalPop.classList.replace("inactive", "active")
-})
-
-// Sélection du bouton de fermeture de la fenêtre modale d'ajout de photo
-const fermetureModalAjout = document.querySelector(".xmark");
-
-// Ajout d'un écouteur d'événements au bouton de fermeture de la fenêtre modale d'ajout de photo
-fermetureModalAjout.addEventListener("click", function() {
-    // Désactivation de la fenêtre modale d'ajout de photo et de l'overlay
-    addModal.classList.replace("active", "inactive")
-    overlay.classList.replace("active", "inactive")
-})
 
 
 // Fermeture de la modal gestion lorsque l'overlay est cliqué
@@ -373,14 +339,46 @@ const deleteWork = async (id) => {
             throw new Error ('Erreur lors de la suppression');
         }
     } catch (error) {
-        console.error(error);
+        console.error('Erreur lors de la suppression :',error);
     }
 };
 
 getModalWorks()
 
+// Ouverture et Fermeture Modale ajout photo 
 
-// Ajout de travaux 
+// Sélection des éléments nécessaires
+const ajoutPhotoModal = document.querySelector('.modal-add-photo')
+const addModal = document.querySelector('.add-modal')
+const arrow = document.querySelector('.arrow')
+
+// Ajout d'un écouteur d'événements au bouton d'ajout de photo
+ajoutPhotoModal.addEventListener("click", function() {
+    // Activation de la fenêtre modale d'ajout de photo et désactivation de la fenêtre modale de la galerie
+    addModal.classList.replace("inactive", "active");
+    modalPop.classList.replace("active", "inactive");
+})
+
+// Ajout d'un écouteur d'événements à la flèche de retour
+arrow.addEventListener("click", function() {
+    // Désactivation de la fenêtre modale d'ajout de photo et activation de la fenêtre modale de la galerie
+    addModal.classList.replace("active", "inactive");
+    modalPop.classList.replace("inactive", "active")
+})
+
+// Sélection du bouton de fermeture de la fenêtre modale d'ajout de photo
+const fermetureModalAjout = document.querySelector(".xmark");
+
+// Ajout d'un écouteur d'événements au bouton de fermeture de la fenêtre modale d'ajout de photo
+fermetureModalAjout.addEventListener("click", function() {
+    // Désactivation de la fenêtre modale d'ajout de photo et de l'overlay
+    addModal.classList.replace("active", "inactive")
+    overlay.classList.replace("active", "inactive")
+})
+
+
+// Modal Ajout de travaux
+// Sélection des éléments
 const photoInput = document.querySelector('#photoInput');
 const previewImg = document.querySelector('#previewImg');
 const photoTitle = document.querySelector('#photoTitle');
@@ -391,8 +389,99 @@ const image = document.querySelector('.img');
 const acceptedFiles = document.querySelector('.accepted-files-description');
 const closePop = document.querySelector('.close-pop');
 
+// Fonction pour vérifier les entrées
+function checkInputs(){
+    if (photoTitle.value.trim() !== '' && photoCategory.value.trim() !== '' && previewImg.classList.contains('active')){
+        addPhotoConfirm.setAttribute('id', 'green');
+    }
+    else {
+        addPhotoConfirm.removeAttribute('id', 'green');
+    }
+}
+
+// Ajout des événements
 addPhotoButton.addEventListener('click', function() {
     photoInput.click();
 });
 
+photoInput.addEventListener('change', function() {
+    const addWork = this.files[0];
+    if(addWork) {
+        const newWork = new FileReader();
+        newWork.onload = function(event) {
+            previewImg.src = event.target.result;
+            previewImg.classList.replace('inactive', 'active');
+        }
+        newWork.readAsDataURL(addWork);
+    }
+    closePop.classList.replace('inactive', 'active');
+    image.classList.replace('active', 'inactive');
+    acceptedFiles.classList.replace('active', 'inactive');
+    addPhotoButton.classList.replace('active', 'inactive');
+});
+
+photoTitle.addEventListener('input', checkInputs);
+photoCategory.addEventListener('change',checkInputs);
+previewImg.addEventListener('load',checkInputs);
+
+addPhotoConfirm.addEventListener('click', async function(event) {
+    event.preventDefault();
+
+    if(photoTitle.value.trim() === '') {
+        alert('Veuillez ajouter un titre à la photo svp');
+        return;
+    }
+    if(photoCategory.value.trim() === '' || photoCategory.value.trim() === '0') {
+        alert('Veuillez ajouter une catégorie à la photo svp');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', photoInput.files[0]);
+    formData.append('title', photoTitle.value.trim());
+    formData.append('category', photoCategory.value.trim());
+
+    try {
+        const resp = await fetch('http://localhost:5678/api/works', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+
+        if (!resp.ok) {
+            throw new Error('Erreur HTTP, statut' + resp.status);
+        }
+
+        const data = await resp.json();
+        console.log('Réponse API', data);
+
+        await getWorks();
+        await getModalWorks();
+    }
+    catch(error) {
+        console.error("Erreur lors de l'envoi", error);
+    }
+
+    photoInput.value = '';
+    previewImg.src = '#';
+    photoTitle.value = '';
+    photoCategory.value = '';
+    previewImg.classList.replace('active', 'inactive');
+    image.classList.replace('inactive', 'active');
+    acceptedFiles.classList.replace('inactive', 'active');
+    closePop.classList.replace('active', 'inactive');
+    addPhotoButton.classList.replace('inactive', 'active');
+});
+
+closePop.addEventListener('click', function() {
+    previewImg.classList.replace('active', 'inactive');
+    image.classList.replace('inactive', 'active');
+    acceptedFiles.classList.replace('inactive', 'active');
+    addPhotoButton.classList.replace('inactive', 'active');
+
+    photoInput.value = '';
+    previewImg.src = '';
+});
 

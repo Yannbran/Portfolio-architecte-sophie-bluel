@@ -374,9 +374,9 @@ label[for="email"], label[for="password"]{
 
 input[type="Password"], input[type="Email"] {
 	border :none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-	height: 51px;
-	width: 379px;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.09);
+	height: 4rem;
+	width: 20rem;
 	font-size: 16px;
 }
 .login input {
@@ -459,7 +459,7 @@ color: red;
 	display: grid;
 	margin: 20% 16% 0 16%;
 	grid-template-columns: repeat(5, 1fr);
-	gap: 10px;
+	gap: 20px;
 	row-gap: 30px;
 	width: 70%;
 }
@@ -468,12 +468,12 @@ color: red;
 	position: relative;
 	width: 100%;
 	height: auto;
+	margin-left: 2px;
 }
 
 #modal-gallery figure img {
 	max-width: 110%;
 	height: auto;
-	
 }
 
  #liner {
@@ -563,9 +563,9 @@ color: red;
 	font-weight: 400;
 	left: 50%;
 	transform: translateX(-50%);
-	margin-top: 130px;
-	width: 420px;
-	height: 169px;
+	margin-top: 8rem;
+	width: 26.5rem;
+	height: 13rem;
 	background-color: #e8f1f6;	
 }
 
@@ -630,7 +630,7 @@ color: red;
 	bottom: -120px;
 	width: 230px;
 	color: #ffffff;
-	background-color: #a7a7a7;
+	background-color: #1D6154;
 }
 
 .add-modal .liner {
@@ -642,9 +642,10 @@ color: red;
 	width: 420px;
 }
 
-.add-modal #previewImage {
-	width: 30%;
-	padding-left: 35%;
+.add-modal #previewImg {
+	margin-left: 8.4rem;
+	width: 36.5%;
+	
 }
 
 #green {
@@ -663,10 +664,10 @@ color: red;
 }
 
 
-/*  Confirmation/Suppression Modal */
+/*  Confirmation/Suppression photo de la Modal */
 
 
-.modal-confirmation {
+.modal-delete {
 	font-family: 'Work Sans';
     position: absolute;
 	align-items: center;
@@ -677,13 +678,13 @@ color: red;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    border: solid 1px #ff0101;
+    border: solid 10px #ff0101;
     padding: 20px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 	border-radius: 2%;
 }
 
-.modal-confirmation h2 {
+.modal-delete h2 {
 	width: 80%;
     margin-top: 2rem;
 	margin-left: 2rem;
@@ -692,7 +693,7 @@ color: red;
 	transform: translateX(-50%);
 }
 
-.modal-confirmation button {
+.modal-delete button {
     background-color: #1D6154;
     color: white;
     border: none;
@@ -713,11 +714,6 @@ button.cancel {
 	bottom: 10%;
 	width: 135px;
 	background-color: #B1663C;
-}
-
-.modal-confirmation button:hover {
-    background-color: #0E2F28;
-	color: white;
 }
 
 #preview-del-img {
@@ -741,25 +737,25 @@ button.cancel {
 #preview-del-img p.title {
 	position: fixed;
 	top: 35%;
-	left: 60%;
+	left: 55%;
 	font-weight: bold;
 }
 
 #preview-del-img p.contenu-title {
 	position: fixed;
 	top: 42%;
-	left: 60%;
+	left: 55%;
 }
 
 #preview-del-img p.category {
 	position: fixed;
 	top: 55%;
-	left: 60%;
+	left: 55%;
 	font-weight: bold;
 }
 
 #preview-del-img p.contenu-category {
 	position: fixed;
 	top: 62%;
-	left: 60%;
+	left: 55%;
 }
