@@ -1,15 +1,43 @@
+
+
+
 // Récupération de l'élément "gallery" dans le DOM
 const gallery = document.getElementById('gallery');
+
+// Fonction pour créer et ajouter un élément de photo à la galerie
+function addPhotoToGallery(photoElement) {
+    // Création d'un conteneur pour chaque photo
+    const container = document.createElement('div');
+    container.classList.add('icon-of-works', 'active');
+    container.dataset.category = photoElement.categoryId;
+
+    // Création de l'élément image
+    const image = document.createElement('img');
+    image.src = photoElement.imageUrl;
+
+    // Création de l'élément titre
+    const title = document.createElement('p');
+    title.textContent = photoElement.title;
+
+    // Ajout des éléments image et titre au conteneur
+    container.appendChild(image);
+    container.appendChild(title);
+
+    // Ajout du conteneur à la galerie
+    gallery.appendChild(container);
+}
 
 // Fonction asynchrone pour récupérer les données de l'API
 const getWorks = async () => {
     try {
+        const apiURL = 'http://localhost:5678/api/works';
+
         // Envoi de la requête avec fetch()
-        const res = await fetch('http://localhost:5678/api/works');
+        const res = await fetch(apiURL);
 
         // Vérification du statut de la réponse
         if (!res.ok) {
-            throw new Error('Erreur lors de la récupération des données.');
+            throw new Error(`Erreur lors de la récupération des données depuis ${apiURL}. Statut : ${res.status}`);
         }
 
         // Conversion de la réponse en JSON
@@ -19,28 +47,7 @@ const getWorks = async () => {
         gallery.innerHTML = "";
 
         // Parcours des données reçues de l'API
-        data.forEach(photoElement => {
-            // Création d'un conteneur pour chaque photo
-            let container = document.createElement('div');
-            container.classList.add('icon-of-works', 'active');
-            container.dataset.category = photoElement.categoryId;
-
-            // Création de l'élément image
-            let image = document.createElement('img');
-            image.src = photoElement.imageUrl;
-
-            // Création de l'élément titre
-            let title = document.createElement('p');
-            title.textContent = photoElement.title;
-
-            // Ajout des éléments image et titre au conteneur
-            container.appendChild(image);
-            container.appendChild(title);
-
-            // Ajout du conteneur à la galerie
-            gallery.appendChild(container);
-        });
-
+        data.forEach(addPhotoToGallery);
     } 
     catch (error) {
         // Gestion de l'erreur
@@ -49,47 +56,20 @@ const getWorks = async () => {
     
         // Vérification de l'existence de l'élément errorMsg et affichage du message
         if (errorMsg) {
-            //Return
             errorMsg.textContent = messageErreur;
         } else {
-            // Si l'élément n'existe pas, on envoie le message d'erreur dans la console, utile en cas de débogage
             console.error("L'élément 'error-works' n'a pas été trouvé dans le DOM. " + messageErreur);
         }
     }
 };
-
 // Appel de la fonction pour récupérer les données
 getWorks();
 
+
+
 // PARTIE FILTRES
-// Récupération des éléments de filtre avec la catégorie
-let filters = document.querySelectorAll('#filtres div');
-
-// 
-// Ajout d'un écouteur d'événement à chaque bouton filtre en identifiant l'ID
-for(let filtre of filters){
-    filtre.addEventListener('click', function(){
-        // Récupère et enregistre la catégorie du filtre pendant l'itération
-        let tag = this.getAttribute('data-category');
-
-        // Récupération de tous les éléments de la galerie
-        let figures = document.querySelectorAll('#gallery .icon-of-works');
-
-        // Parcours de tous les éléments de la galerie
-        for(let figure of figures){
-            // Remplacement de la classe 'active' par 'inactive'
-            figure.classList.replace('active', 'inactive');
-
-            // Si la catégorie du filtre correspond à celle de l'élément, ou si le filtre est '0', remplacement de la classe 'inactive' par 'active'
-            if(tag === figure.dataset.category || tag ==='0'){
-                figure.classList.replace('inactive', 'active');
-            };
-        };
-    });
-};
-
-// Récupération des boutons de filtres
-const boutonsFiltres = document.querySelectorAll('#filtres button');
+// Récupération des boutons de filtres a partir du DOM
+const boutonsFiltres = document.querySelectorAll('.filtres button');
 
 // Ajout d'un écouteur d'événement à chaque bouton de filtre
 boutonsFiltres.forEach(bouton => {
@@ -103,101 +83,159 @@ boutonsFiltres.forEach(bouton => {
     });
 });
 
+// Récupération des éléments de filtre avec la catégorie
+const filters = document.querySelectorAll('.filtres div');
+
+// Ajout d'un écouteur d'événement à chaque bouton filtre en identifiant l'ID
+filters.forEach(filtre => {
+    filtre.addEventListener('click', function(){
+        // Récupère et enregistre la catégorie du filtre pendant l'itération
+        const tag = this.getAttribute('data-category');
+
+        // Récupération de tous les éléments de la galerie
+        const figures = document.querySelectorAll('#gallery .icon-of-works');
+
+        // Parcours de tous les éléments de la galerie
+        figures.forEach(figure => {
+            // Remplacement de la classe 'active' par 'inactive'
+            figure.classList.replace('active', 'inactive');
+
+            // Si la catégorie du filtre correspond à celle de l'élément, ou si le filtre est '0', remplacement de la classe 'inactive' par 'active'
+            if(tag === figure.dataset.category || tag ==='0'){
+                figure.classList.replace('inactive', 'active');
+            };
+        });
+    });
+});
+
+
+
 // PARTIE LOGIN
 // Récupération du token de l'utilisateur dans le localStorage
 const token = localStorage.getItem('token');
 
-// Fonction pour afficher le contenu du mode edition quand l'utilisateur est connecté
-function modeEdition() {
-    // Vérifie si un token existe
+// Récupération du formulaire dans le DOM
+const form = document.querySelector('form');
+
+// Fonction pour afficher un message d'erreur dans le DOM
+function afficherErreur(message) {
+    const erreur = document.getElementById('error');
+    erreur.textContent = message;
+}
+
+// Fonction pour gérer la soumission du formulaire
+async function gererSoumission(event) {
+    event.preventDefault();
+
+    const data = {
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+    };
+
+    try {
+        const reponse = await fetch('http://localhost:5678/api/users/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        });
+
+        if (!reponse.ok) {
+            throw new Error('Erreur lors de la requête API');
+        }
+
+        const donneesReponse = await reponse.json();
+        const token = donneesReponse.token;
+
+        if (token) {
+            localStorage.setItem('token', token);
+            window.location.href = 'index.html';
+        }
+    } catch (erreur) {
+        console.error(erreur);
+        afficherErreur('Erreur dans l’identifiant ou le mot de passe');
+    }
+}
+
+// Ajout d'un écouteur d'événement sur le formulaire pour gérer la soumission
+form.addEventListener('submit', gererSoumission);
+
+
+
+// Fonction pour gérer l'affichage du mode d'édition quand l'utilisateur est connecté 
+function handleLoginStatus() {
     if (token) {
         // Récupération des éléments dans le DOM
-        const divFiltres = document.querySelector('#filtres');
-        const divHeader = document.querySelector('.header-edition');
-        const divModal = document.querySelector('#modal')
+        const divFiltres = getAndCheckElement('.filtres');
+        const divHeader = getAndCheckElement('.header-edition');
+        const divModal = getAndCheckElement('#modal');
+        const Log = getAndCheckElement(".Log");
 
-        // Si l'élément 'filtres' existe, ajoute la classe 'inactive'
-        if (divFiltres) {
-            divFiltres.classList.add('inactive');
-        }
-        // Si l'élément 'bandeau-edition' existe, supprime la classe 'inactive'
-        if (divHeader) {
-            divHeader.classList.remove('inactive');
-        }
-        // Si l'élément 'modal' existe, supprime la classe 'inactive'
-        if (divModal) {
-            divModal.classList.remove('inactive')
-        }
-    }
-}
-// Appel de la fonction pour afficher le mode edition
-modeEdition();
+        // Modification de l'interface utilisateur pour le mode d'édition
+        if (divFiltres) divFiltres.classList.add('inactive');
+        if (divHeader) divHeader.classList.remove('inactive');
+        if (divModal) divModal.classList.remove('inactive');
 
-// Fonction pour gérer la déconnexion de l'utilisateur
-function LogOut () {
-    // Vérifie si un token existe
-    if (token) {
-        // Récupération de l'élément 'Log' dans le DOM
-        const Log = document.querySelector(".Log");
-
-        // Si l'élément 'Log' existe, change le texte en 'logout'
-        if(Log) {
+        // Gestion de la déconnexion
+        if (Log) {
             Log.textContent = "Logout";
-
-            // Supprime l'attribut 'href'
-            Log.removeAttribute("href");
-
-            // Ajoute un écouteur d'événement pour gérer le clic sur le bouton 'logout'
             Log.addEventListener("click", function () {
-                // Supprime le token du localStorage
-                localStorage.removeItem("token")
-                // Recharge la page
+                localStorage.removeItem("token");
                 location.reload();
-            })
+            });
         }
     }
 }
 
-// Appel de la fonction pour gérer la déconnexion
-LogOut ();
 
+// Fonction pour récupérer un élément du DOM et vérifier son existence
+function getAndCheckElement(selector) {
+    const element = document.querySelector(selector);
+    if (element) return element;
+    console.error(`L'élément '${selector}' n'a pas été trouvé dans le DOM.`);
+    return null;
+}
+
+
+// Appel de la fonction pour gérer le statut de connexion
+handleLoginStatus();
 
 
 // PARTIES MODALES
 // Modale galerie photo
 // Sélection des éléments nécessaires
-const clickModal = document.querySelector('#modal')
-const modalPop = document.querySelector('.modal-pop')
-const overlay = document.querySelector('.overlay')
+const clickModal = document.querySelector('#modal');
+const modalPop = document.querySelector('.modal-pop');
+const overlay = document.querySelector('.overlay');
+const closeModalPop = document.querySelector('.close-pop');
+const addModalAjout = document.querySelector('.add-modal')
+
+// Fonction pour activer/désactiver l'affichage des modales
+function toggleModal(modal, isActive) {
+    modal.classList.replace(isActive ? 'inactive' : 'active', isActive ? 'active' : 'inactive');
+    overlay.classList.replace(isActive ? 'inactive' : 'active', isActive ? 'active' : 'inactive');
+}
 
 // Ajout d'un écouteur d'événements au bouton d'ouverture de la galerie
 clickModal.addEventListener('click', function() {
-    // Activation de la fenêtre modale et de l'overlay
-    modalPop.classList.replace('inactive', 'active');
-    overlay.classList.replace('inactive', 'active');
-})
-
-// Sélection du bouton de fermeture de la galerie
-const closeModalPop = document.querySelector('.close-pop');
+    toggleModal(modalPop, true);
+});
 
 // Ajout d'un écouteur d'événements au bouton de fermeture de la galerie
 closeModalPop.addEventListener('click', function() {
-    // Désactivation de la fenêtre modale et de l'overlay
-    modalPop.classList.replace('active', 'inactive')
-    overlay.classList.replace('active', 'inactive')
-})
+    toggleModal(modalPop, false);
+    
+});
 
-
-// Ajout et suppression de travaux 
+// Fermeture de la modal lorsque l'overlay est cliqué
+overlay.addEventListener("click", function(event) {
+    if (event.target === overlay) {
+        toggleModal(modalPop, false);
+        toggleModal(addModalAjout, false);
+    }
+});
+// Affichage des travaux de la galerie modale
 // Sélection de l'élément avec l'ID 'modal-gallery' et stockage dans la variable modalGallery
-const modalGallery = document.querySelector('#modal-gallery');
-
-// Sélection de l'élément avec l'ID 'modal-confirmation' et stockage dans la variable modalConfirmation
-const modalConfirmation = document.querySelector('#modal-delete');
-
-// Sélection de l'élément avec l'ID 'preview-del-img' et stockage dans la variable previewDelImg
-const previewDelImg = document.querySelector('#preview-del-img');
-
+const modalGallery = document.querySelector('.modal-gallery-ajout');
 
 // Déclaration d'une fonction asynchrone nommée getModalWorks
 const getModalWorks = async () => {
@@ -219,54 +257,36 @@ const getModalWorks = async () => {
                     <img src=${photoData.imageUrl} alt=${photoData.title}>
                     <span class="photo-delete" data-id="${photoData.id}"><i class="fa-solid fa-trash-can"></i></span>
                 </figure>`;
-               
-        });
-        
-   // Ajout d'un écouteur d'événements à chaque bouton de suppression
-        document.querySelectorAll('.photo-delete').forEach(span => {
-            span.addEventListener('click', function () {
-                // Récupération de l'ID de la photo à supprimer
-                const id = this.getAttribute('data-id');
+ });
 
-                // Recherche de la photo correspondante dans les données
-                const photoData = data.find(photo => photo.id.toString() === id);
+// Ajout d'un écouteur d'événements à chaque bouton de suppression
+document.querySelectorAll('.photo-delete').forEach(span => {
+    span.addEventListener('click', function () {
+        // Récupération de l'ID de la photo à supprimer
+        const id = this.getAttribute('data-id');
 
-                // Si la photo est trouvée, ouverture de la fenêtre modale de confirmation
-                if (photoData) {
-                    openConfirmationModal(id, photoData);
-                } else {
-                    // Si la photo n'est pas trouvée, affichage d'une erreur dans la console
-                    console.error('Image non trouvée.');
-                }
-            });
-        });
-    } catch (error) {
-        // En cas d'erreur lors de la récupération des données, affichage de l'erreur dans la console
-        console.error('Erreur lors de récupération des données:', error);
-    }
+        // Recherche de la photo correspondante dans les données
+        const photoData = data.find(photo => photo.id.toString() === id);
+
+        // Si la photo est trouvée, ouverture de la fenêtre modale de confirmation
+        if (photoData) {
+            openConfirmationModal(id, photoData);
+        } 
+    });
+});
+} catch (error) {
+// En cas d'erreur lors de la récupération des données, affichage de l'erreur dans la console
+console.error('Erreur lors de récupération des données:', error);
+// Affichage d'un message d'erreur à l'utilisateur
+modalGallery.innerHTML = "<p>Une erreur s'est produite lors de la récupération des photos. Veuillez réessayer plus tard.</p>";
+}
 };
+// Appel de la fonction pour mettre à jour l'affichage de la modale
+getModalWorks();
 
-
-
-
-
-
-// Fermeture de la modal gestion lorsque l'overlay est cliqué
-overlay.addEventListener("click", function(event) {
-    if (event.target === overlay) {
-        modalPop.classList.replace("active", "inactive");
-        overlay.classList.replace("active", "inactive");
-    }
-});
-
-// Fermeture de la modal ajout lorsque l'overlay est cliqué
-overlay.addEventListener("click", function(event) {
-    if (event.target === overlay) {
-        addModal.classList.replace("active", "inactive");
-        overlay.classList.replace("active", "inactive");
-    }
-});
-
+// Confirmer la suppression
+// Sélection de l'élément avec l'ID 'modal-confirmation' et stockage dans la variable modalConfirmation
+const modalConfirmation = document.querySelector('#modal-delete');
 
 // Fonction pour ouvrir la fenêtre modale pour confirmer la suppression 
 const openConfirmationModal = (id, photoData) => {
@@ -287,11 +307,11 @@ const openConfirmationModal = (id, photoData) => {
 
         // Appel de la fonction de confirmation de suppression
         confirmDelete(id);
-
-        // Mise à jour de l'affichage (ces fonctions ne sont pas définies dans le code fourni)
-        getModalWorks();
-        getWorks();
     });
+
+
+ // Sélection de l'élément avec l'ID 'preview-del-img' et stockage dans la variable previewDelImg
+ const previewDelImg = document.querySelector('#preview-del-img');
 
     // Ajout d'un écouteur d'événements au bouton d'annulation
     cancelButton.addEventListener('click', function () {
@@ -340,13 +360,13 @@ const deleteWork = async (id) => {
         }
     } catch (error) {
         console.error('Erreur lors de la suppression :',error);
+        modalGallery.innerHTML = "<p>Une erreur s'est produite lors de l'envoi des photos. Veuillez réessayer plus tard.</p>";
     }
 };
 
-getModalWorks()
+
 
 // Ouverture et Fermeture Modale ajout photo 
-
 // Sélection des éléments nécessaires
 const ajoutPhotoModal = document.querySelector('.modal-add-photo')
 const addModal = document.querySelector('.add-modal')
@@ -375,7 +395,6 @@ fermetureModalAjout.addEventListener("click", function() {
     addModal.classList.replace("active", "inactive")
     overlay.classList.replace("active", "inactive")
 })
-
 
 // Modal Ajout de travaux
 // Sélection des éléments
@@ -484,4 +503,8 @@ closePop.addEventListener('click', function() {
     photoInput.value = '';
     previewImg.src = '';
 });
+
+
+
+
 

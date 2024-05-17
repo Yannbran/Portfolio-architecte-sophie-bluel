@@ -206,7 +206,7 @@ nav li :hover {
 
 /* Filtres */
 
-#filtres {
+.filtres {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -223,12 +223,13 @@ button {
 	justify-content: center;
 	min-width: 100px;
 	padding: 8px 12px;
-	border: solid 1px #1D6154;
+	border: solid 2px #1D6154;
 	border-radius: 60px;
 	background-color: white;
 	font-family: 'Syne';
 	font-size: 16px;
 	cursor: pointer;
+	color: #1D6154;
 }
 
 .filtre-on{
@@ -433,14 +434,15 @@ color: red;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 42rem;
-	height: 45rem;
+	height: 47rem;
 	background-color: white;
 	border-radius: 10px;
 }
 
-.close-pop .fa-xmark{
+.close-pop .fa-xmark {
 	position: absolute;
-	right: 0;
+	left: 33rem;
+	margin-top: 1rem;
 	padding: 30px;
 	color: #000000;
 }
@@ -454,24 +456,24 @@ color: red;
 	font-size: 26px;	 
 }
 
- #modal-gallery {
+ .modal-gallery-ajout {
 	margin-top: 16px;
 	display: grid;
 	margin: 20% 16% 0 16%;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 20px;
-	row-gap: 30px;
+	row-gap: 15px;
 	width: 70%;
 }
 
-#modal-gallery figure {
+.modal-gallery-ajout figure {
 	position: relative;
 	width: 100%;
 	height: auto;
 	margin-left: 2px;
 }
 
-#modal-gallery figure img {
+.modal-gallery-ajout figure img {
 	max-width: 110%;
 	height: auto;
 }
@@ -502,19 +504,17 @@ color: red;
 }
 
 .modal-pop span {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 6px;
+	position: relative;
+	bottom: 7rem;	
+	left: 4rem;
 }
 
 .fa-trash-can {
 	font-size: 10px;
 	color: white;
-	padding: 5px;
+	padding: 4px;
 	background-color: #000000;
 	border-radius: 3px;
-	top: 0;
 }
 
 
@@ -573,7 +573,7 @@ color: red;
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-	top: 5%;
+	top: 7%;
 	font-size: 70px;
 	padding: 6px;
 	color: #b9c5cc;
@@ -583,21 +583,22 @@ color: red;
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-	margin-top: 90px;
+	margin-top: 7rem;
 	border: none;
 	background-color: #cbd6dc;
 	color: #306685;
 	width: 173px;
-	height: 36px;
+	height: 2rem;
 	font-size: 14px;
 }
 
 .add-modal p {
+	font-family: none;
 	position: absolute;
 	left: 50%;
 	bottom: 0;
 	transform: translateX(-50%);
-	margin-bottom: 19px;
+	margin-bottom: 1.5rem;
 }
 
 
@@ -630,7 +631,7 @@ color: red;
 	bottom: -120px;
 	width: 230px;
 	color: #ffffff;
-	background-color: #1D6154;
+	background-color: #b3b3b3;
 }
 
 .add-modal .liner {
@@ -667,24 +668,24 @@ color: red;
 /*  Confirmation/Suppression photo de la Modal */
 
 
-.modal-delete {
+#modal-delete {
 	font-family: 'Work Sans';
     position: absolute;
 	align-items: center;
 	justify-content: center;
-	width: 39rem;
+	width: 35rem;
 	height: 37rem;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
     border: solid 10px #ff0101;
     padding: 20px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    box-shadow: 5px 10px  50px rgb(0, 0, 0);
 	border-radius: 2%;
 }
 
-.modal-delete h2 {
+#modal-delete h2 {
 	width: 80%;
     margin-top: 2rem;
 	margin-left: 2rem;
@@ -693,7 +694,7 @@ color: red;
 	transform: translateX(-50%);
 }
 
-.modal-delete button {
+#modal-delete button {
     background-color: #1D6154;
     color: white;
     border: none;

@@ -27,7 +27,7 @@
         <h3>Galerie photo</h3>
 
         <!-- Un div pour la galerie de photos -->
-        <div id="modal-gallery"></div>
+        <div class="modal-gallery-ajout"></div>
 
 		<div id="liner"></div>
 
@@ -65,11 +65,10 @@
         <!-- Un div pour l'ajout de photo -->
         <div class="add-photo">
 			<span class="close-pop inactive"></span>
-
             <!-- Un input pour sélectionner le fichier de la photo à ajouter -->
 			<label for="photoInput"></label>
-			<input type="file" id="photoInput" accept="image/jpeg, image/png" size="4194304" class="inactive">
-			
+			<input type="file" id="photoInput" accept="image/jpeg, image/png" class="inactive" placeholder="none">
+		
 			<span class="img active"><i class="fa-regular fa-image"></i></span>
 
             <!-- Un bouton pour ajouter une photo -->
@@ -81,7 +80,7 @@
 
             <!-- Une image pour l'aperçu de la photo à ajouter -->
 			<img id="previewImg" src="#" alt="Aperçu de l'image" class="inactive">
-		 </div>
+		</div>
 
          <!-- Un formulaire pour le titre et la catégorie de la photo -->
 		 
@@ -152,7 +151,7 @@
 			</div>
 	
 			<!-- Filtres pour le portfolio -->
-			<div id="filtres">
+			<div class="filtres">
 				<div data-category="0"><button class="filtre-on">Tous</button></div>
 				<div data-category="1"><button class="filtre-off">Objets</button></div>
 				<div data-category="2"><button class="filtre-off">Appartements</button></div>
