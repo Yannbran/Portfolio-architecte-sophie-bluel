@@ -335,10 +335,8 @@ const openConfirmationModal = (id, photoData) => {
 
 // Fonction pour confirmer la suppression de l'œuvre
 const confirmDelete = (id) => {
-    
     // Fermeture de la fenêtre modale
     modalConfirmation.style.display = 'none';
-    modalPop.style.display = 'block';
     // Appel de la fonction de suppression de l'œuvre
     deleteWork(id);
     
