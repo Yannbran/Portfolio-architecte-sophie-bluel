@@ -65,24 +65,24 @@ const getWorks = async () => {
 // Appel de la fonction pour récupérer les données
 getWorks();
 
-
-
 // PARTIE FILTRES
 // Récupération des boutons de filtres a partir du DOM
 const boutonsFiltres = document.querySelectorAll('.filtres button');
 
+// Gère l'affichage du bouton au click
 // Ajout d'un écouteur d'événement à chaque bouton de filtre
 boutonsFiltres.forEach(bouton => {
     bouton.addEventListener('click', function() {
-        // Suppression de la classe "filtre-on" de tous les boutons
+        // Supprime  la classe "filtre-on" de tous les boutons
         boutonsFiltres.forEach(bouton => {
             bouton.classList.remove('filtre-on');    
         });
-        // Ajout de la classe "filtre-on" uniquement au bouton cliqué
+        // Ajoute la classe "filtre-on" uniquement au bouton cliqué
         this.classList.add('filtre-on');
     });
 });
 
+//Gère l'affichage des travaux filtrés par categorie
 // Récupération des éléments de filtre avec la catégorie
 const filters = document.querySelectorAll('.filtres div');
 
@@ -101,104 +101,104 @@ filters.forEach(filtre => {
             figure.classList.replace('active', 'inactive');
 
             // Si la catégorie du filtre correspond à celle de l'élément, ou si le filtre est '0', remplacement de la classe 'inactive' par 'active'
-            if(tag === figure.dataset.category || tag ==='0'){
+            if(tag === figure.dataset.category || tag === '0'){
                 figure.classList.replace('inactive', 'active');
             };
         });
     });
 });
 
-
-
 // PARTIE LOGIN
-// Récupération du token de l'utilisateur dans le localStorage
-const token = localStorage.getItem('token');
-
-// Récupération du formulaire dans le DOM
 const form = document.querySelector('form');
 
-// Fonction pour afficher un message d'erreur dans le DOM
-function afficherErreur(message) {
-    const erreur = document.getElementById('error');
-    erreur.textContent = message;
-}
-
-// Fonction pour gérer la soumission du formulaire
-async function gererSoumission(event) {
+// Soumission du formulaire //
+form.addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    const data = {
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-    };
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
+    const data = {
+            email: email,
+            password: password
+        };
+
+        // Envoi des données à l'API //
     try {
-        const reponse = await fetch('http://localhost:5678/api/users/login', {
+        const resp = await fetch('http://localhost:5678/api/users/login', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(data)
         });
 
-        if (!reponse.ok) {
-            throw new Error('Erreur lors de la requête API');
+        if (!resp.ok) {
+            throw new Error("Erreur lors de la requête API");
         }
 
-        const donneesReponse = await reponse.json();
-        const token = donneesReponse.token;
+        const respData = await resp.json ();
+        console.log(respData);
+
+        const token = respData.token;
 
         if (token) {
-            localStorage.setItem('token', token);
-            window.location.href = 'index.html';
+            localStorage.setItem("token", token);
+            window.location.href = "index.html";
         }
-    } catch (erreur) {
-        console.error(erreur);
-        afficherErreur('Erreur dans l’identifiant ou le mot de passe');
+        //Gestion erreur //
+    } catch (error) {
+        console.error(error);
+        MsgErreur("Erreur d’identifiant ou de mot de passe");
     }
+});
+
+function MsgErreur(ErreurMessage) {
+    const Erreur = document.getElementById("error");
+    Erreur.textContent = ErreurMessage;
 }
+// Changements quand user connecté //
+const token = localStorage.getItem('token');
 
-// Ajout d'un écouteur d'événement sur le formulaire pour gérer la soumission
-form.addEventListener('submit', gererSoumission);
-
-
-
-// Fonction pour gérer l'affichage du mode d'édition quand l'utilisateur est connecté 
-function handleLoginStatus() {
+// Masquer la div Filtre //
+function MasquerFiltres() {
     if (token) {
-        // Récupération des éléments dans le DOM
-        const divFiltres = getAndCheckElement('.filtres');
-        const divHeader = getAndCheckElement('.header-edition');
-        const divModal = getAndCheckElement('#modal');
-        const Log = getAndCheckElement(".Log");
+        const divFiltres = document.querySelector('.filtres');
+        const divBandeau = document.querySelector('.header-edition');
+        const divModal = document.querySelector('#modal')
 
-        // Modification de l'interface utilisateur pour le mode d'édition
-        if (divFiltres) divFiltres.classList.add('inactive');
-        if (divHeader) divHeader.classList.remove('inactive');
-        if (divModal) divModal.classList.remove('inactive');
+        if (divFiltres) {
+            divFiltres.classList.add('inactive');
+            }
+        if (divBandeau) {
+            divBandeau.classList.remove('inactive');
+            }
+        if (divModal) {
+            divModal.classList.remove('inactive')
+        }
+        }
+    }
+MasquerFiltres();
 
-        // Gestion de la déconnexion
-        if (Log) {
+// Changement sur le nav "Login / Logout" //
+function LogOut () {
+
+    if (token) {
+    const Log = document.querySelector(".Log");
+
+        if(Log) {
             Log.textContent = "Logout";
+
+            Log.removeAttribute("href");
+
             Log.addEventListener("click", function () {
-                localStorage.removeItem("token");
+                localStorage.removeItem("token")
                 location.reload();
-            });
+                })
         }
     }
 }
-
-
-// Fonction pour récupérer un élément du DOM et vérifier son existence
-function getAndCheckElement(selector) {
-    const element = document.querySelector(selector);
-    if (element) return element;
-    console.error(`L'élément '${selector}' n'a pas été trouvé dans le DOM.`);
-    return null;
-}
-
-
-// Appel de la fonction pour gérer le statut de connexion
-handleLoginStatus();
-
+LogOut ();
 
 // PARTIES MODALES
 // Modale galerie photo
@@ -289,7 +289,7 @@ getModalWorks();
 // Sélectionne l'élément avec l'ID 'modal-confirmation' et stockage dans la variable modalConfirmation
 const modalConfirmation = document.querySelector('#modal-delete');
 
-// Fonction pour ouvrir la fenêtre modale pour confirmer la suppression 
+// Fonction pour confirmer la suppression 
 const openConfirmationModal = (id, photoData) => {
     // Sélection des boutons de confirmation et d'annulation
     const confirmButton = modalConfirmation.querySelector(".confirm");
@@ -309,8 +309,7 @@ const openConfirmationModal = (id, photoData) => {
         // Appel de la fonction de confirmation de suppression
         confirmDelete(id);
     });
-
-
+    
  // Sélection de l'élément avec l'ID 'preview-del-img' et stockage dans la variable previewDelImg
  const previewDelImg = document.querySelector('#preview-del-img');
 
@@ -332,16 +331,20 @@ const openConfirmationModal = (id, photoData) => {
         <p class="contenu-category">${photoData.category.name}</p>`;
 };
 
+
+
 // Fonction pour confirmer la suppression de l'œuvre
 const confirmDelete = (id) => {
     // Fermeture de la fenêtre modale
     modalConfirmation.style.display = 'none';
-
+    modalPop.style.display = 'block';
     // Appel de la fonction de suppression de l'œuvre
     deleteWork(id);
+    
 };
 
 // Fonction asynchrone pour supprimer l'œuvre
+
 const deleteWork = async (id) => {
     try {
         // Envoi d'une requête HTTP DELETE au serveur pour supprimer l'œuvre
@@ -355,17 +358,16 @@ const deleteWork = async (id) => {
 
         // Vérification du statut de la réponse
         if (res.ok) {
-            console.log('Photo supprimée');
+            console.log('Photo supprimée'); 
+            return true;
         } else {
             throw new Error ('Erreur lors de la suppression');
         }
     } catch (error) {
         console.error('Erreur lors de la suppression :',error);
-        modalGallery.innerHTML = "<p>Une erreur s'est produite lors de l'envoi des photos. Veuillez réessayer plus tard.</p>";
+        modalGallery.innerHTML = "<p>Une erreur s'est produite lors de la supression des photos. Veuillez réessayer plus tard.</p>";
     }
 };
-
-
 
 // Ouverture et Fermeture Modale ajout photo étape3.3
 // Sélection des éléments nécessaires
@@ -475,7 +477,7 @@ addPhotoConfirm.addEventListener('click', async function(event) {
     }
     // Création d'un nouvel objet FormData pour stocker les données du formulaire
     const formData = new FormData();
-    // Ajout de l'image à l'objet FormData
+    // Ajoute une image, un titre et une catégorie à l'objet FormData
     formData.append('image', photoInput.files[0]);
     formData.append('title', photoTitle.value.trim());
     formData.append('category', photoCategory.value.trim());
@@ -504,39 +506,14 @@ addPhotoConfirm.addEventListener('click', async function(event) {
     }
     catch(error) {
         console.error("Erreur lors de l'envoi", error);
+        addModal.innerHTML = "<p>Une erreur s'est produite lors de l'envoi des photos. Veuillez réessayer plus tard.</p>";
     }
 
     // Réinitialisation des champs
     photoInput.value = '';
-    previewImg.src = '#';
+    previewImg.src = '';
     photoTitle.value = '';
     photoCategory.value = '';
-    // Désactivation de l'image de prévisualisation
-    previewImg.classList.replace('active', 'inactive');
-    // Activation de l'image par défaut
-    image.classList.replace('inactive', 'active');
-    // Activation de la description des types de fichiers acceptés
-    acceptedFiles.classList.replace('inactive', 'active');
-    // Activation du bouton de fermeture de la fenêtre modale
-    closePop.classList.replace('active', 'inactive');
-    // Activation du bouton d'ajout de photo
-    addPhotoButton.classList.replace('inactive', 'active');
-});
-
-// Lorsque le bouton de fermeture de la fenêtre modale est cliqué
-closePop.addEventListener('click', function() {
-    // Désactivation de l'image de prévisualisation
-    previewImg.classList.replace('active', 'inactive');
-    // Activation de l'image par défaut
-    image.classList.replace('inactive', 'active');
-    // Activation de la description des types de fichiers acceptés
-    acceptedFiles.classList.replace('inactive', 'active');
-    // Activation du bouton d'ajout de photo
-    addPhotoButton.classList.replace('inactive', 'active');
-
-    // Réinitialisation des champs
-    photoInput.value = '';
-    previewImg.src = '';
 });
 
 
