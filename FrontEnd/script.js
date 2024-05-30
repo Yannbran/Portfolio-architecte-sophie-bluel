@@ -37,7 +37,7 @@ const getWorks = async () => {
 
         // Vérification du statut de la réponse
         if (!res.ok) {
-            throw new Error(`Erreur lors de la récupération des données depuis ${apiURL}. Statut : ${res.status}`);
+            throw new Error(`Erreur lors de la récupération des données depuis`);
         }
 
         // Conversion de la réponse en JSON
@@ -335,8 +335,8 @@ const deleteWork = async (id) => {
         });
 
         if (res.ok) {
+            getModalWorks();
             console.log('Photo supprimée');
-            return true;
         } else {
             throw new Error ('Erreur lors de la suppression');
         }
@@ -354,7 +354,8 @@ const addModal = document.querySelector('.add-modal')
 const arrow = document.querySelector('.arrow')
 
 // Ajout d'un écouteur d'événements au bouton d'ajout de photo
-ajoutPhotoModal.addEventListener("click", function() {
+ajoutPhotoModal.addEventListener("click", function(event) {
+    event.preventDefault();
     // Activation de la fenêtre modale d'ajout de photo et désactivation de la fenêtre modale de la galerie
     addModal.classList.replace("inactive", "active");
     modalPop.classList.replace("active", "inactive");
@@ -407,7 +408,8 @@ addPhotoButton.addEventListener('click', function() {
     photoInput.click();
 });
 // Lorsqu'un fichier est sélectionné via l'input de photo
-photoInput.addEventListener('change', function() {
+photoInput.addEventListener('change', function(event) {
+    event.preventDefault();
     // Enregistre dans addWork le premier fichier selectionné
     const addWork = this.files[0];
     // Si un fichier a été sélectionné
@@ -439,9 +441,8 @@ photoCategory.addEventListener('change',checkInputs);
 previewImg.addEventListener('load',checkInputs);
 
 // Ajout d'un écouteur d'événements au bouton de confirmation d'ajout de photo
-addPhotoConfirm.addEventListener('click', async function(event) {
+addPhotoConfirm.addEventListener('click', async function() {
     // Prévention du comportement par défaut du formulaire (qui est de soumettre le formulaire)
-    event.preventDefault();
 
     // Si le titre de la photo est vide, affichage d'une alerte à l'utilisateur
     if(photoTitle.value.trim() === '') {
@@ -469,18 +470,22 @@ addPhotoConfirm.addEventListener('click', async function(event) {
                 'Authorization': `Bearer ${token}`,
             }
         });
+
+        if (resp.ok) {
+            const data = await resp.json();
+            console.log('Photo ajoutée');
+            console.log('Réponse API', data);
+
+            // Fermeture de la fenêtre modale d'ajout de photo
+            addModal.classList.replace("active", "inactive");
+            // Mise à jour de la fenêtre modale de la galerie
+            getModalWorks();
+            modalPop.classList.replace("inactive", "active");
+        }
         // Si la réponse n'est pas ok, lance une erreur
-        if (!resp.ok) {
+        else {
             throw new Error('Erreur HTTP, statut' + resp.status);
         }
-        // Conversion de la réponse en JSON
-        const data = await resp.json();
-        // Affichage des données dans la console
-        console.log('Réponse API', data);
-
-        // Mise à jour de l'affichage
-        await getWorks();
-        await getModalWorks();
     }
     catch(error) {
         console.error("Erreur lors de l'envoi", error);
@@ -492,10 +497,11 @@ addPhotoConfirm.addEventListener('click', async function(event) {
     previewImg.src = '';
     photoTitle.value = '';
     photoCategory.value = '';
+
+    // Réactivation du bouton d'ajout de photo
+addPhotoButton.classList.replace('inactive', 'active');
+
 });
-
-
-
 
 
 
