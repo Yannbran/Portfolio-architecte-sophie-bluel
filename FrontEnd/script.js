@@ -1,7 +1,7 @@
 
 
 
-// Récupération de l'élément "gallery" dans le DOM
+// Récupération de l'élément "gallery" dans le DOM 
 const gallery = document.getElementById('gallery');
 
 // Fonction pour créer et ajouter un élément de photo à la galerie
@@ -234,96 +234,78 @@ overlay.addEventListener("click", function(event) {
         toggleModal(addModalAjout, false);
     }
 });
+
 // Affichage des travaux de la galerie modale
 // Sélection de l'élément avec l'ID 'modal-gallery' et stockage dans la variable modalGallery
+
 const modalGallery = document.querySelector('.modal-gallery-ajout');
 
-// Déclaration d'une fonction asynchrone nommée getModalWorks
 const getModalWorks = async () => {
     try {
         // Envoi d'une requête GET à l'API pour récupérer les données
         const res = await fetch("http://localhost:5678/api/works");
-      
+        if (!res.ok) {
+            throw new Error ('Erreur lors de récupération des données:');
+        }
         // Variable pour enregistrée la réponse en JSON
         const data = await res.json();
-
-        // Réinitialisation du contenu de la galerie
-        modalGallery.innerHTML = "";
-
+        // Affiche le contenu récupéré
+        let content = '';
         // Parcours de chaque élément dans les données récupérées
         data.forEach(photoData => {
             // Ajout de chaque photo à la galerie avec un bouton de suppression
-            modalGallery.innerHTML += `
+                content += `
                 <figure class="active" data-${photoData.categoryId} >
                     <img src=${photoData.imageUrl} alt=${photoData.title}>
                     <span class="photo-delete" data-id="${photoData.id}"><i class="fa-solid fa-trash-can"></i></span>
                 </figure>`;
- });
+        });
+        // Réinitialisation du contenu de la galerie
+        modalGallery.innerHTML = content;
 
-// Ajout d'un écouteur d'événements à chaque bouton de suppression
-document.querySelectorAll('.photo-delete').forEach(span => {
-    span.addEventListener('click', function () {
-        // Récupération de l'ID de la photo à supprimer
-        const id = this.getAttribute('data-id');
+           // Ajout des écouteurs d'événements pour la suppression des photos
+           document.querySelectorAll('.photo-delete').forEach(span => {
+            span.addEventListener('click', function () {
+                // Récupération de l'ID de la photo à supprimer
+                const id = this.getAttribute('data-id');
 
-        // Recherche de la photo correspondante dans les données
-        const photoData = data.find(photo => photo.id.toString() === id);
+                // Recherche de la photo correspondante dans les données
+                const photoData = data.find(photo => photo.id.toString() === id);
 
-        // Si la photo est trouvée, ouverture de la fenêtre modale de confirmation
-        if (photoData) {
-            openConfirmationModal(id, photoData);
-        } 
-    });
-});
-} catch (error) {
-// En cas d'erreur lors de la récupération des données, affiche l'erreur dans la console
-console.error('Erreur lors de récupération des données:', error);
-// Affiche un message d'erreur à l'utilisateur
-modalGallery.innerHTML = "<p>Une erreur s'est produite lors de la récupération des photos. Veuillez réessayer plus tard.</p>";
-}
+                // Si la photo est trouvée, ouverture de la fenêtre modale de confirmation
+                if (photoData) {
+                    openConfirmationModal(id, photoData);
+                }
+            });
+        });
+    }
+    catch (error) {
+        // En cas d'erreur lors de la récupération des données, affiche l'erreur dans la console
+        console.error('Erreur lors de récupération des données:', error);
+        // Affiche un message d'erreur à l'utilisateur
+        modalGallery.innerHTML = "<p>Une erreur s'est produite lors de la récupération des photos. Veuillez réessayer plus tard.</p>";
+        }
 };
+
 // Appel de la fonction pour mettre à jour l'affichage de la modale
 getModalWorks();
 
 // Confirme la suppression
 // Sélectionne l'élément avec l'ID 'modal-confirmation' et stockage dans la variable modalConfirmation
 const modalConfirmation = document.querySelector('#modal-delete');
+const previewDelImg = document.querySelector('#preview-del-img');
 
-// Fonction pour confirmer la suppression 
 const openConfirmationModal = (id, photoData) => {
-    // Sélection des boutons de confirmation et d'annulation
     const confirmButton = modalConfirmation.querySelector(".confirm");
     const cancelButton = modalConfirmation.querySelector(".cancel");
 
-    // Attribution de l'ID de l'œuvre au bouton de confirmation
     confirmButton.setAttribute('data-id', id);
-
-    // Affichage de la fenêtre modale
     modalConfirmation.style.display = 'block';
 
-    // Ajout d'un écouteur d'événements au bouton de confirmation
-    confirmButton.addEventListener('click', function () {
-        // Récupération de l'ID de l'œuvre
-        const id = this.getAttribute('data-id');
+    confirmButton.onclick = () => confirmDelete(id);
+    cancelButton.onclick = closeConfirmationModal;
 
-        // Appel de la fonction de confirmation de suppression
-        confirmDelete(id);
-    });
-    
- // Sélection de l'élément avec l'ID 'preview-del-img' et stockage dans la variable previewDelImg
- const previewDelImg = document.querySelector('#preview-del-img');
-
-    // Ajout d'un écouteur d'événements au bouton d'annulation
-    cancelButton.addEventListener('click', function () {
-        // Effacement de l'aperçu de l'image à supprimer
-        previewDelImg.innerHTML = '';
-
-        // Fermeture de la fenêtre modale
-        modalConfirmation.style.display = 'none';
-    });
-
-    // Affichage des détails de l'œuvre dans la fenêtre modale
-    previewDelImg.innerHTML += `
+    previewDelImg.innerHTML = `
         <img src=${photoData.imageUrl} alt=${photoData.title}>
         <p class="title">Titre:</p>
         <p class="contenu-title">${photoData.title}</p> 
@@ -331,22 +313,19 @@ const openConfirmationModal = (id, photoData) => {
         <p class="contenu-category">${photoData.category.name}</p>`;
 };
 
-
-
-// Fonction pour confirmer la suppression de l'œuvre
-const confirmDelete = (id) => {
-    // Fermeture de la fenêtre modale
+const closeConfirmationModal = () => {
+    previewDelImg.innerHTML = '';
     modalConfirmation.style.display = 'none';
-    // Appel de la fonction de suppression de l'œuvre
-    deleteWork(id);
-    
 };
 
-// Fonction asynchrone pour supprimer l'œuvre
+const confirmDelete = async (id) => {
+    await deleteWork(id);
+    // Ferme la fenêtre modale de confirmation
+    modalConfirmation.style.display = 'none';  
+};
 
 const deleteWork = async (id) => {
     try {
-        // Envoi d'une requête HTTP DELETE au serveur pour supprimer l'œuvre
         const res = await fetch(`http://localhost:5678/api/works/${id}`, {
             method: "DELETE",
             headers: {
@@ -355,19 +334,19 @@ const deleteWork = async (id) => {
             }
         });
 
-        // Vérification du statut de la réponse
         if (res.ok) {
-            console.log('Photo supprimée'); 
+            console.log('Photo supprimée');
             return true;
         } else {
             throw new Error ('Erreur lors de la suppression');
         }
     } catch (error) {
-        console.error('Erreur lors de la suppression :',error);
+        console.error('Erreur lors de la suppression :', error);
         modalGallery.innerHTML = "<p>Une erreur s'est produite lors de la supression des photos. Veuillez réessayer plus tard.</p>";
     }
 };
 
+//**************** */
 // Ouverture et Fermeture Modale ajout photo étape3.3
 // Sélection des éléments nécessaires
 const ajoutPhotoModal = document.querySelector('.modal-add-photo')
@@ -514,6 +493,7 @@ addPhotoConfirm.addEventListener('click', async function(event) {
     photoTitle.value = '';
     photoCategory.value = '';
 });
+
 
 
 
